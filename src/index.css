@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@utility container {
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  max-width: 1280px;
+}
+
+.landing {
+  background-image: url('/Asset 2.svg'), linear-gradient(145deg, #0f172b, #45556c);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (max-width: 1024px) {
+  .landing {
+    background-position: center;
+    background-size: contain;
+  }
+}
+
+.special-heading {
+  @apply text-slate-600 text-4xl lg:text-5xl font-bold text-center relative rounded-2xl py-2 lg:py-3 px-4 lg:px-5 w-fit mx-auto transition-all duration-300 cursor-default pb-3 lg:pb-5 z-10;
+}
+
+.special-heading::before {
+  content: "";
+  position: absolute;
+  @apply w-4 h-4 lg:w-5 lg:h-5 bg-slate-600 -left-6 top-1/2 -translate-y-1/2 rounded-full transition-all duration-300;
+}
+
+.special-heading::after {
+  content: "";
+  position: absolute;
+  @apply w-4 h-4 lg:w-5 lg:h-5 bg-slate-600 -right-6 top-1/2 -translate-y-1/2 rounded-full transition-all duration-300;
+}
+
+.special-heading:hover {
+  @apply text-white;
+}
+
+.special-heading:hover::before {
+  @apply w-full h-full left-0 -z-10;
+}
+
+.special-heading:hover::after {
+  @apply w-full h-full right-0 -z-10;
+}
