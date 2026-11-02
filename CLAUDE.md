@@ -113,6 +113,7 @@ Rich, using Framer Motion, with these constraints:
 - The LCP element (hero name + title) renders without an entrance animation.
 - Always respect `prefers-reduced-motion` (`MotionConfig reducedMotion="user"`).
 - Entrance animations use `whileInView` and are applied to below-the-fold elements only.
+  - **Exception — Hero:** everything in the Hero except the name, title and bio (the bio is the mobile LCP) may use a short mount-time entrance (`animate`, not `whileInView`), via `src/components/motion/FadeIn.tsx`.
 - **Content must be readable without JS.** Framer Motion server-renders `initial` states as inline styles (e.g. `opacity: 0`), so every animated wrapper gets a `data-motion` attribute, and the root layout includes:
 
   ```html
