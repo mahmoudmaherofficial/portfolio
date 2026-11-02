@@ -149,6 +149,7 @@ Use `eslint .` directly (`next lint` was removed in Next.js 16). Run `npm run ty
   4. Merge the PR, then delete the branch.
 - Never commit directly to `develop` or `main`. Release by opening a PR from `develop` into `main`.
 - Branch names: `feat/...`, `fix/...`, `content/...`, `chore/...`.
+- No AI attribution anywhere: no `Co-Authored-By: Claude` trailers in commits and no "Generated with Claude Code" lines in PR titles, descriptions or comments.
 - Commits follow Conventional Commits: `feat:`, `fix:`, `content:`, `style:`, `refactor:`, `chore:`.
 - Vercel preview deployments are used to review PRs.
 
