@@ -38,7 +38,7 @@ Personal portfolio for Mahmoud Maher, Front-End Developer.
 ## 3. Stack and Conventions
 
 - **Framework:** Next.js (App Router), TypeScript with `strict: true`.
-- **Styling:** Tailwind CSS v4 + shadcn/ui.
+- **Styling:** Tailwind CSS v4 + shadcn/ui (Base UI, `base-nova` style). Do not switch to Radix.
 - **Fonts:** Geist Sans + Geist Mono via `next/font`.
 - **Motion:** Framer Motion.
 - **Theme:** `next-themes`.
