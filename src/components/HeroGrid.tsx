@@ -69,10 +69,10 @@ export function HeroGrid() {
         gridColor={colors.foreground}
         gridOpacity={0}
         fillOpacity={0.03}
-        maxOpacity={0.5}
+        maxOpacity={0.2}
         spotlight={0.4}
         intro={true}
-        radius={100}
+        radius={90}
         lightMode={resolvedTheme === "light"}
       />
     </div>
