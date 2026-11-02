@@ -153,6 +153,11 @@ Rich, using Framer Motion, with these constraints:
 
 Use `eslint .` directly (`next lint` was removed in Next.js 16). Run `npm run typecheck`, `npm run lint` and `npm run build` before saying any task is done.
 
+### No tests
+
+- Do not write automated tests (unit, integration or e2e), add `*.test.ts` / `*.spec.ts` files, a `test` script or a test framework.
+- Verify changes with `typecheck`, `lint`, `build` and a check in the browser instead.
+
 ### Git
 
 - `main` is production (deployed to the domain). `develop` is the integration branch.
