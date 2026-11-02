@@ -10,7 +10,7 @@ import { publicFileExists } from "@/lib/public-file"
 
 export function Hero() {
   const metaLine = [profile.location, profile.timezone].join(" · ")
-  const hasCv = publicFileExists(profile.cvPath)
+  const hasResume = publicFileExists(profile.resumePath)
 
   return (
     <section
@@ -62,13 +62,13 @@ export function Hero() {
                 className="transition-transform group-hover/cta:translate-x-0.5"
               />
             </a>
-            {hasCv && (
+            {hasResume && (
               <a
-                href={profile.cvPath}
+                href={profile.resumePath}
                 download
                 className={buttonVariants({ size: "lg", variant: "outline" })}
               >
-                Download CV
+                Download Resume
               </a>
             )}
           </FadeIn>

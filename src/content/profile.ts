@@ -7,5 +7,5 @@ export const profile: Profile = {
   location: "Menofia, Egypt",
   timezone: "Cairo time (EET)",
   availability: "Open to remote & relocation (Gulf)",
-  cvPath: "/Mahmoud-Maher-CV.pdf",
+  resumePath: "/Mahmoud-Maher-Resume.pdf",
 }
