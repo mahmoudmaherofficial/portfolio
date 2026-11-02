@@ -142,9 +142,13 @@ Use `eslint .` directly (`next lint` was removed in Next.js 16). Run `npm run ty
 ### Git
 
 - `main` is production (deployed to the domain). `develop` is the integration branch.
-- Create feature branches from `develop` and open PRs into `develop`. Release by opening a PR from `develop` into `main`.
-- Never commit directly to `main`. Work on `develop` itself only for small repo housekeeping (e.g. docs/config); features and content go through a branch + PR.
-- Branch names: `feat/...`, `fix/...`, `content/...`.
+- Every change, however small, follows this flow:
+  1. Create a new branch from the latest `develop`.
+  2. Commit the change on that branch and push it.
+  3. Open a PR into `develop`.
+  4. Merge the PR, then delete the branch.
+- Never commit directly to `develop` or `main`. Release by opening a PR from `develop` into `main`.
+- Branch names: `feat/...`, `fix/...`, `content/...`, `chore/...`.
 - Commits follow Conventional Commits: `feat:`, `fix:`, `content:`, `style:`, `refactor:`, `chore:`.
 - Vercel preview deployments are used to review PRs.
 
