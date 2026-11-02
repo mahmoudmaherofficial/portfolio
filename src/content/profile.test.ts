@@ -35,8 +35,8 @@ test("links to the portfolio's public repo", () => {
   )
 })
 
-test("profile photo points at public/me.png", () => {
-  assert.equal(profile.photo.src, "/me.png")
-  assert.equal(profile.photo.width, 635)
-  assert.equal(profile.photo.height, 843)
+test("profile photo points at public/me.webp", () => {
+  assert.equal(profile.photo.src, "/me.webp")
+  assert.equal(profile.photo.width, 720)
+  assert.equal(profile.photo.height, 960)
 })
