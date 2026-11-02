@@ -91,6 +91,19 @@ public/                   # me.png, favicon.png, CV PDF, projects/<slug>/
 - **Dark mode:** follows the system by default, with a manual toggle. Both themes must meet contrast requirements.
 - Header and footer use the same nav links.
 
+### Components (ReactBits first)
+
+- Before building any UI piece (cards, backgrounds, text effects, animated or interactive components, etc.), search the `@react-bits` registry with the shadcn MCP (`search_items_in_registries`) for components that fit. Fall back to `@shadcn`, then custom code, only when nothing suitable exists.
+- Pick only components that match the design direction above (dev / technical, one accent color). Don't add effects for their own sake.
+- Always use the `-TS-TW` variant (TypeScript + Tailwind), e.g. `npx shadcn@latest add @react-bits/SpotlightCard-TS-TW`.
+- Finish every added component so it fully fits the project:
+  - Theme tokens and the accent color instead of hardcoded colors, in both light and dark mode.
+  - The Motion rules below (`LazyMotion` + `m`, `data-motion`, reduced motion, nothing animated on the LCP element).
+  - A `"use client"` leaf only, typed under `strict`, accessible (keyboard, focus, alt text), and passing typecheck, lint and build.
+- If a component needs a new dependency (e.g. `gsap`, `three`, `ogl`), ask before installing it.
+- Canvas / WebGL backgrounds must keep Lighthouse at 90+: load lazily, pause when off-screen, and show a static fallback under `prefers-reduced-motion`.
+- Name the ReactBits component(s) used in the PR description.
+
 ### Motion
 
 Rich, using Framer Motion, with these constraints:
