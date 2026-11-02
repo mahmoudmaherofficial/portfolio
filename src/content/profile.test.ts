@@ -10,7 +10,7 @@ test("profile matches the brief verbatim", () => {
     profile.bio,
     "I build fast web apps with Next.js, React and TypeScript, from a client dashboard used daily by a 25+ person team to bilingual Arabic/English websites."
   )
-  assert.equal(profile.cvPath, "/Mahmoud-Maher-CV.pdf")
+  assert.equal(profile.resumePath, "/Mahmoud-Maher-Resume.pdf")
 })
 
 test("meta line parts join to the brief's meta line", () => {

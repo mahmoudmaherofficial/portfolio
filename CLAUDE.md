@@ -5,7 +5,7 @@
 Personal portfolio for Mahmoud Maher, Front-End Developer.
 
 - **Audience:** recruiters hiring Front-End Developers in Egypt and the Gulf (remote or relocation).
-- **Goal:** show production client work (dashboards, management systems, bilingual websites) and get recruiters to download the CV or make contact.
+- **Goal:** show production client work (dashboards, management systems, bilingual websites) and get recruiters to download the resume or make contact.
 - **Language:** English only.
 - **Domain:** https://mahmoudmaher.site (hosted on Vercel).
 - **Routes:** `/` only, a single scrollable page. Project screenshots open in a lightbox. No `/projects/[slug]` detail pages for now; they will be added later only once each project has detail-page content in the content files.
@@ -24,7 +24,7 @@ Personal portfolio for Mahmoud Maher, Front-End Developer.
 - A value is **unconfirmed** if it is marked `[ ]` or wrapped in square brackets (e.g. `` `[2025]` ``).
 - Unconfirmed values are never rendered. Hide the **field**, not the whole item, unless a required field is missing.
 - A project card renders only when all of these are confirmed: **title, summary, tech list, and at least one screenshot**. Otherwise the whole card is hidden. Missing optional fields (date, Challenge, What I did, links) just hide that field.
-- The "Download CV" button renders only when the CV file exists in `public/`.
+- The "Download Resume" button renders only when the resume PDF exists in `public/`.
 - Never ship `[ ]`, TODOs or internal notes to the site. No "coming soon" or "under construction" sections.
 
 ### Wording rules
@@ -76,7 +76,7 @@ src/
 │   └── ui/               # shadcn/ui components
 ├── content/              # typed content: profile.ts, projects.ts, skills.ts, experience.ts
 └── lib/                  # utils, types, motion helpers, ratelimit
-public/                   # me.png, favicon.png, CV PDF, projects/<slug>/
+public/                   # me.png, favicon.png, resume PDF, projects/<slug>/
 ```
 
 ### Naming

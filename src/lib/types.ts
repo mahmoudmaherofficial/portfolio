@@ -5,6 +5,6 @@ export type Profile = {
   location: string
   timezone: string
   availability: string
-  /** URL path of the CV under `public/`, starting with "/". */
-  cvPath: string
+  /** URL path of the resume PDF under `public/`, starting with "/". */
+  resumePath: string
 }
