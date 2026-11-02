@@ -21,7 +21,7 @@ export function HeroCodeCard({ className }: { className?: string }) {
     <div
       aria-hidden="true"
       className={cn(
-        "overflow-hidden rounded-xl border bg-card text-card-foreground shadow-2xl shadow-black/10 dark:shadow-black/40",
+        "overflow-hidden rounded-xl border border-primary/20 bg-card text-card-foreground shadow-2xl shadow-primary/10 dark:shadow-primary/10",
         className
       )}
     >
