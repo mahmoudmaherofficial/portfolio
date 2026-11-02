@@ -51,7 +51,7 @@ export function About() {
                 height={profile.photo.height}
                 alt={`Portrait of ${profile.name}`}
                 sizes="(min-width: 1024px) 22rem, 20rem"
-                className="relative h-auto w-full mask-[linear-gradient(to_bottom,black_70%,transparent)] pt-6"
+                className="relative h-auto w-full mask-[linear-gradient(to_bottom,black_70%,transparent)]"
               />
               {CORNERS.map((corner) => (
                 <span

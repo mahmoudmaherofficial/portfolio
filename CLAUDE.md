@@ -76,7 +76,7 @@ src/
 │   └── ui/               # shadcn/ui components
 ├── content/              # typed content: profile.ts, projects.ts, skills.ts, experience.ts
 └── lib/                  # utils, types, motion helpers, ratelimit
-public/                   # me.png, favicon.png, resume PDF, projects/<slug>/
+public/                   # me.webp, favicon.png, resume PDF, projects/<slug>/
 ```
 
 ### Naming
