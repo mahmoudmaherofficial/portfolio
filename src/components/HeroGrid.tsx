@@ -7,20 +7,22 @@ import CursorGrid from "@/components/CursorGrid"
 
 type GridColors = { primary: string; foreground: string }
 
-const REDUCED_MOTION = "(prefers-reduced-motion: reduce)"
+/** Only mouse/trackpad users without a reduced-motion preference get the highlight layer. */
+const SHOW_HIGHLIGHTS =
+  "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)"
 
-function subscribeReducedMotion(onChange: () => void) {
-  const query = window.matchMedia(REDUCED_MOTION)
+function subscribeShowHighlights(onChange: () => void) {
+  const query = window.matchMedia(SHOW_HIGHLIGHTS)
   query.addEventListener("change", onChange)
   return () => query.removeEventListener("change", onChange)
 }
 
-/** True when the visitor asks for reduced motion. Assumed true on the server so nothing animates before hydration. */
-function usePrefersReducedMotion(): boolean {
+/** False on the server so nothing extra renders before hydration. */
+function useShowHighlights(): boolean {
   return useSyncExternalStore(
-    subscribeReducedMotion,
-    () => window.matchMedia(REDUCED_MOTION).matches,
-    () => true
+    subscribeShowHighlights,
+    () => window.matchMedia(SHOW_HIGHLIGHTS).matches,
+    () => false
   )
 }
 
@@ -45,7 +47,7 @@ function readThemeColors(): GridColors {
 /** Emerald cell highlights that follow the cursor, layered over the hero's static CSS grid. */
 export function HeroGrid() {
   const { resolvedTheme } = useTheme()
-  const reducedMotion = usePrefersReducedMotion()
+  const showHighlights = useShowHighlights()
   const [colors, setColors] = useState<GridColors | null>(null)
 
   useEffect(() => {
@@ -55,8 +57,8 @@ export function HeroGrid() {
     return () => cancelAnimationFrame(frame)
   }, [resolvedTheme])
 
-  // Reduced motion: keep only the hero's static CSS grid.
-  if (reducedMotion || !colors) return null
+  // Touch devices and reduced motion keep only the hero's static CSS grid.
+  if (!showHighlights || !colors) return null
 
   return (
     <div aria-hidden="true" className="absolute inset-0 -z-10">
@@ -66,6 +68,7 @@ export function HeroGrid() {
         color={colors.primary}
         gridColor={colors.foreground}
         gridOpacity={0}
+        intro={false}
         lightMode={resolvedTheme === "light"}
       />
     </div>

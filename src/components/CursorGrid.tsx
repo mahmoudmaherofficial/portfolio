@@ -638,7 +638,8 @@ const CursorGrid = ({
       gl.deleteTexture(stateTexture);
       gl.deleteVertexArray(vao);
       gl.deleteProgram(shader.program);
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      // No loseContext(): Strict Mode remounts on the same canvas and would get a lost context.
+      // The context is released with the canvas.
     };
   }, []);
 
