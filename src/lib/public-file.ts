@@ -11,8 +11,9 @@ export function publicFileExists(
   urlPath: string,
   publicDir: string = path.join(process.cwd(), "public")
 ): boolean {
-  const base = path.resolve(publicDir)
+  // Build-time only (the page is static): skip output file tracing.
+  const base = path.resolve(/*turbopackIgnore: true*/ publicDir)
   const target = path.resolve(base, urlPath.replace(/^\/+/, ""))
   if (!target.startsWith(base + path.sep)) return false
-  return fs.existsSync(target)
+  return fs.existsSync(/*turbopackIgnore: true*/ target)
 }
