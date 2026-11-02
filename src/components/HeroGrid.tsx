@@ -72,6 +72,7 @@ export function HeroGrid() {
         maxOpacity={0.5}
         spotlight={0.4}
         intro={true}
+        radius={100}
         lightMode={resolvedTheme === "light"}
       />
     </div>
