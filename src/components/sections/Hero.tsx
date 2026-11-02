@@ -1,3 +1,4 @@
+import { HeroGrid } from "@/components/HeroGrid"
 import { buttonVariants } from "@/components/ui/button"
 import { profile } from "@/content/profile"
 import { publicFileExists } from "@/lib/public-file"
@@ -12,6 +13,7 @@ export function Hero() {
       className="relative isolate flex min-h-svh items-center overflow-hidden"
     >
       <div aria-hidden="true" className="hero-grid absolute inset-0 -z-10" />
+      <HeroGrid />
 
       <div className="mx-auto w-full max-w-5xl px-4 py-24 sm:px-6">
         <p aria-hidden="true" className="font-mono text-xs text-muted-foreground">
