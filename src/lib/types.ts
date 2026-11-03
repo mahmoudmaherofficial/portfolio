@@ -24,3 +24,17 @@ export type ExperienceEntry = {
   summary: string
   tech: string[]
 }
+
+export type NavItem = {
+  /** Id of the page section this link scrolls to. */
+  id: string
+  label: string
+}
+
+export type Site = {
+  /** Monogram shown in the header and footer; links to the hero. */
+  logo: string
+  /** Every nav link, in page order. Only links to rendered sections are shown. */
+  nav: NavItem[]
+  footerTagline: string
+}
