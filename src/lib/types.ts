@@ -51,3 +51,28 @@ export type SkillGroup = {
   /** A link that shows the group's skills in use. */
   proof?: { label: string; href: string }
 }
+
+export type Screenshot = {
+  /** Path under `public/projects/<slug>/`, starting with "/". */
+  src: string
+  width: number
+  height: number
+  alt: string
+}
+
+export type Project = {
+  slug: string
+  title: string
+  /** e.g. "Client Project" or "Personal Project". */
+  type: string
+  role?: string
+  date?: string
+  /** Shown in place of the date, e.g. "In development". */
+  badge?: string
+  summary: string
+  challenge?: string
+  whatIDid?: string
+  tech: string[]
+  links: { label: string; href: string }[]
+  screenshots: Screenshot[]
+}
