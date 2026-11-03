@@ -14,3 +14,13 @@ export type Profile = {
   /** Profile photo under `public/`, with its intrinsic size. */
   photo: { src: string; width: number; height: number }
 }
+
+export type ExperienceEntry = {
+  role: string
+  /** Omitted for freelance work. */
+  company?: string
+  /** Display period, e.g. "Oct 2024 – Present". */
+  period: string
+  summary: string
+  tech: string[]
+}
