@@ -38,3 +38,16 @@ export type Site = {
   nav: NavItem[]
   footerTagline: string
 }
+
+export type Skill = {
+  name: string
+  /** Where the skill can be seen in use, e.g. a repo. Omit when there is nothing to link. */
+  href?: string
+}
+
+export type SkillGroup = {
+  name: string
+  skills: Skill[]
+  /** A link that shows the group's skills in use. */
+  proof?: { label: string; href: string }
+}

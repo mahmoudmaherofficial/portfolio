@@ -1,4 +1,5 @@
 import SpotlightCard from "@/components/SpotlightCard"
+import { TechTag } from "@/components/TechTag"
 import { Reveal } from "@/components/motion/Reveal"
 import { experience, experienceIntro } from "@/content/experience"
 import { cn } from "@/lib/utils"
@@ -78,11 +79,8 @@ export function Experience() {
                         className="mt-5 flex flex-wrap gap-2"
                       >
                         {entry.tech.map((tech) => (
-                          <li
-                            key={tech}
-                            className="rounded-md border border-border px-2 py-0.5 font-mono text-xs text-muted-foreground"
-                          >
-                            {tech}
+                          <li key={tech}>
+                            <TechTag name={tech} />
                           </li>
                         ))}
                       </ul>
