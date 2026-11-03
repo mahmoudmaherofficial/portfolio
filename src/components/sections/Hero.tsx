@@ -6,11 +6,13 @@ import { HeroCodeCard } from "@/components/sections/HeroCodeCard"
 import { buttonVariants } from "@/components/ui/button"
 import { profile } from "@/content/profile"
 import { cn } from "@/lib/utils"
+import { getVisibleProjects } from "@/lib/projects"
 import { publicFileExists } from "@/lib/public-file"
 
 export function Hero() {
   const metaLine = [profile.location, profile.timezone].join(" · ")
   const hasResume = publicFileExists(profile.resumePath)
+  const hasProjects = getVisibleProjects().length > 0
 
   return (
     <section
@@ -52,16 +54,18 @@ export function Hero() {
           </FadeIn>
 
           <FadeIn delay={0.2} className="mt-10 flex flex-wrap gap-3">
-            <a
-              href="#projects"
-              className={cn(buttonVariants({ size: "lg" }), "group/cta")}
-            >
-              View Projects
-              <ArrowRight
-                aria-hidden="true"
-                className="transition-transform group-hover/cta:translate-x-0.5"
-              />
-            </a>
+            {hasProjects && (
+              <a
+                href="#projects"
+                className={cn(buttonVariants({ size: "lg" }), "group/cta")}
+              >
+                View Projects
+                <ArrowRight
+                  aria-hidden="true"
+                  className="transition-transform group-hover/cta:translate-x-0.5"
+                />
+              </a>
+            )}
             {hasResume && (
               <a
                 href={profile.resumePath}

@@ -1,7 +1,7 @@
 import { ArrowUpRight } from "lucide-react"
 
 const TAG =
-  "inline-flex items-center gap-1 rounded-md border border-border px-2 py-0.5 font-mono text-xs text-muted-foreground"
+  "inline-flex items-center gap-1 rounded-md border border-border px-2 py-0.5 font-mono text-xs whitespace-nowrap text-muted-foreground"
 
 /** Mono tag for a technology. With `href` it becomes an external link. */
 export function TechTag({ name, href }: { name: string; href?: string }) {
