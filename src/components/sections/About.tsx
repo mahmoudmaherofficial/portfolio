@@ -32,7 +32,7 @@ export function About() {
           </SectionHeading>
         </Reveal>
 
-        <Reveal className="mt-6 sm:mt-8">
+        <Reveal amount="some" className="mt-6 sm:mt-8">
           <EditorWindow
             tab={{ name: "about.md", kind: "md" }}
             bodyClassName="grid gap-6 p-4 sm:p-6 lg:grid-cols-[minmax(0,20rem)_2.75rem_minmax(0,1fr)] lg:gap-0 lg:p-0"

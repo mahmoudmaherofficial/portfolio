@@ -47,8 +47,12 @@ export function Explorer({
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") close(true)
     }
+    // The dimmed backdrop is inside <details>, so "outside" means outside the summary and panel.
     const onPointerDown = (event: PointerEvent) => {
-      if (!details.contains(event.target as Node)) close()
+      const target = event.target as Node
+      const summary = details.querySelector("summary")
+      const panel = details.querySelector("nav")
+      if (!summary?.contains(target) && !panel?.contains(target)) close()
     }
     const onScroll = () => {
       if (Math.abs(window.scrollY - startY) > 40) close()
@@ -103,7 +107,7 @@ export function Explorer({
       />
       <nav
         aria-label="Explorer"
-        className="fixed inset-x-0 top-11 border-b bg-surface-chrome pb-2 shadow-2xl motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-top-2"
+        className="fixed inset-x-0 top-11 max-h-[calc(100dvh-2.75rem)] overflow-y-auto overscroll-contain border-b bg-surface-chrome pb-2 shadow-2xl motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-top-2"
       >
         <p className="px-4 pt-3.5 pb-1.5 font-mono text-[0.6875rem] tracking-widest text-syntax-comment">
           EXPLORER

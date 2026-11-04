@@ -36,6 +36,8 @@ const DIM = 0.35
 const HOLD_DISTANCE = 120
 /** Gap kept between a tall card's bottom edge and the bottom of the viewport. */
 const BOTTOM_GAP = 16
+/** Height of the fixed status bar at the bottom of the viewport (28px on desktop). */
+const STATUS_BAR = 28
 
 export const ScrollStackItem = ({
   children,
@@ -117,13 +119,16 @@ export default function ScrollStack({
       // Cards share one band centered on the tallest card that fits, each pinning one step
       // lower than the last so earlier cards peek out above it. A card too tall for the
       // viewport pins by its bottom edge instead, so it scrolls fully into view first.
-      const room = viewHeight - base - BOTTOM_GAP
+      const room = viewHeight - base - BOTTOM_GAP - STATUS_BAR
       const band = Math.max(0, ...heights.filter((h) => h <= room))
       const centered =
         base + (viewHeight - base - band - (slots.length - 1) * ITEM_OFFSET) / 2
       const start = Math.max(centered, base)
       pins = heights.map((height, i) =>
-        Math.min(start + i * ITEM_OFFSET, viewHeight - height - BOTTOM_GAP)
+        Math.min(
+          start + i * ITEM_OFFSET,
+          viewHeight - height - BOTTOM_GAP - STATUS_BAR
+        )
       )
       slots.forEach((slot, i) => {
         write(`top${i}`, `${Math.round(pins[i])}px`, (value) => {
@@ -192,7 +197,11 @@ export default function ScrollStack({
       const covered = next
         ? next.getBoundingClientRect().top < box.bottom
         : false
-      if (box.top >= clear && box.bottom <= window.innerHeight && !covered)
+      if (
+        box.top >= clear &&
+        box.bottom <= window.innerHeight - STATUS_BAR &&
+        !covered
+      )
         return
 
       // Bring the card to where it has just pinned. If the control sits in the part of a tall

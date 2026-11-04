@@ -28,7 +28,7 @@ export function Skills() {
           </p>
         </Reveal>
 
-        <Reveal className="mt-6 sm:mt-8">
+        <Reveal amount="some" className="mt-6 sm:mt-8">
           <EditorWindow
             tab={{ name: "skills.json", kind: "json" }}
             bodyClassName="p-3 sm:p-6"

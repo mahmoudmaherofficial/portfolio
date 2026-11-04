@@ -115,6 +115,9 @@
   }
   html {
     @apply font-sans;
+    /* Keep focused and jumped-to elements clear of the fixed header and status bar. */
+    scroll-padding-top: 3.25rem;
+    scroll-padding-bottom: calc(2.25rem + env(safe-area-inset-bottom));
   }
   /* Keep section headings clear of the fixed header when jumping to an anchor. */
   section[id] {
