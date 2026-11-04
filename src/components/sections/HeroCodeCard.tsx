@@ -1,13 +1,14 @@
+import { Tok, type TokKind } from "@/components/ide/Tok"
 import { profile } from "@/content/profile"
 import { profileCodeLines, type CodeTokenKind } from "@/lib/profile-code"
 import { cn } from "@/lib/utils"
 
-const TOKEN_CLASS: Record<CodeTokenKind, string> = {
-  keyword: "text-primary",
-  type: "text-primary",
-  key: "text-muted-foreground",
-  string: "text-foreground",
-  plain: "text-muted-foreground",
+const TOKEN_KIND: Record<CodeTokenKind, TokKind> = {
+  keyword: "keyword",
+  type: "type",
+  key: "plain",
+  string: "string",
+  plain: "plain",
 }
 
 /**
@@ -41,9 +42,9 @@ export function HeroCodeCard({ className }: { className?: string }) {
                 {i + 1}
               </span>
               {line.map((token, j) => (
-                <span key={j} className={TOKEN_CLASS[token.kind]}>
+                <Tok key={j} kind={TOKEN_KIND[token.kind]}>
                   {token.text}
-                </span>
+                </Tok>
               ))}
               {i === lines.length - 1 && (
                 <span className="ml-1 text-primary motion-safe:animate-pulse">
