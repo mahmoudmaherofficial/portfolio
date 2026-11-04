@@ -66,6 +66,8 @@ export type Site = {
   /** Every nav link, in page order. Only links to rendered sections are shown. */
   nav: NavItem[]
   footerTagline: string
+  /** Comment under the footer's repo link. */
+  footerSourceNote: string
 }
 
 export type Skill = {

@@ -16,4 +16,5 @@ export const site: Site = {
     { id: "contact", label: "Contact", file: "contact.sh", kind: "sh" },
   ],
   footerTagline: "Front-End Developer · Next.js, React, TypeScript",
+  footerSourceNote: "read the code behind this page",
 }
