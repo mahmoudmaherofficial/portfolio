@@ -17,7 +17,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative isolate flex min-h-svh items-center overflow-hidden"
+      className="relative isolate flex min-h-[calc(100svh-2.75rem)] items-center overflow-hidden"
     >
       <div aria-hidden="true" className="absolute inset-0 -z-10 hero-grid" />
       <HeroGrid />

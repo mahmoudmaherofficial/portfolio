@@ -29,11 +29,11 @@ export function Projects() {
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
         {/*
           Phones and tablets: the label, title and progress stay pinned under the site header
-          (h-14) while the cards stack below. Desktop: scrolls away normally.
+          (h-11) while the cards stack below. Desktop: scrolls away normally.
         */}
         <div
           id="projects-head"
-          className="sticky top-14 z-20 -mx-4 bg-background px-4 py-3 sm:-mx-6 sm:px-6 lg:static lg:mx-0 lg:bg-transparent lg:p-0"
+          className="sticky top-11 z-20 -mx-4 bg-background px-4 py-3 sm:-mx-6 sm:px-6 lg:static lg:mx-0 lg:bg-transparent lg:p-0"
         >
           <Reveal>
             <p
@@ -70,8 +70,8 @@ export function Projects() {
         <ProjectSheetProvider projects={projects}>
           <ScrollStack
             className="mt-12"
-            // Below the fixed site header (h-14), and below the section header while it is pinned.
-            stackPosition={56}
+            // Below the fixed site header (h-11), and below the section header while it is pinned.
+            stackPosition={44}
             headerId="projects-head"
           >
             {projects.map((project, index) => (

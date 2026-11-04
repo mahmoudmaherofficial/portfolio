@@ -1,26 +1,33 @@
-import { HeaderReveal } from "@/components/layout/HeaderReveal"
+import { Kbd } from "@/components/ide/Kbd"
+import { Explorer } from "@/components/layout/Explorer"
+import { Logo } from "@/components/layout/Logo"
 import { SiteNav } from "@/components/layout/SiteNav"
 import { ThemeToggle } from "@/components/layout/ThemeToggle"
-import { site } from "@/content/site"
+import { profile } from "@/content/profile"
 import type { NavItem } from "@/lib/types"
+import { publicFileExists } from "@/lib/public-file"
 
+/** Always-visible editor chrome: file tabs on desktop, a file switcher below `lg`. */
 export function Header({ nav }: { nav: NavItem[] }) {
-  return (
-    <HeaderReveal>
-      <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <a
-          href="#hero"
-          className="rounded-md font-mono text-xl font-semibold tracking-tight outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-        >
-          {site.logo}
-          <span className="sr-only"> Back to top</span>
-        </a>
+  const resumeHref = publicFileExists(profile.resumePath)
+    ? profile.resumePath
+    : undefined
 
-        <div className="flex items-center gap-1">
-          <SiteNav items={nav} />
-          <ThemeToggle />
-        </div>
+  return (
+    <header className="fixed inset-x-0 top-0 z-40 flex h-11 items-stretch justify-between border-b bg-surface-chrome">
+      <div className="flex min-w-0 items-stretch">
+        <Logo className="flex items-center px-4 text-[0.9375rem] lg:border-r lg:px-5" />
+        <SiteNav items={nav} />
       </div>
-    </HeaderReveal>
+
+      <Explorer items={nav} resumeHref={resumeHref} repoUrl={profile.repoUrl} />
+
+      <div className="flex items-center gap-3 pr-1 lg:pr-3">
+        <span className="hidden font-mono text-xs text-syntax-comment lg:pointer-fine:inline">
+          press <Kbd>D</Kbd> theme
+        </span>
+        <ThemeToggle />
+      </div>
+    </header>
   )
 }

@@ -71,7 +71,7 @@ export default function RootLayout({
           />
         </noscript>
       </head>
-      <body>
+      <body className="pt-11 pb-[calc(1.5rem+env(safe-area-inset-bottom))] lg:pb-[calc(1.75rem+env(safe-area-inset-bottom))]">
         <ThemeProvider>
           <MotionProvider>{children}</MotionProvider>
         </ThemeProvider>
