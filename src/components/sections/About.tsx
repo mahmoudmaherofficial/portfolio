@@ -1,9 +1,13 @@
 import Image from "next/image"
 import { ArrowUpRight } from "lucide-react"
 
+import { EditorWindow } from "@/components/ide/EditorWindow"
+import { Gutter } from "@/components/ide/Gutter"
+import { SectionHeading } from "@/components/ide/SectionHeading"
 import { Reveal } from "@/components/motion/Reveal"
 import { buttonVariants } from "@/components/ui/button"
 import { profile } from "@/content/profile"
+import { cn } from "@/lib/utils"
 
 const CORNERS = [
   "left-3 top-3 border-l border-t",
@@ -19,27 +23,21 @@ export function About() {
     <section
       id="about"
       aria-labelledby="about-heading"
-      className="relative border-t py-24 offscreen-section sm:py-32"
+      className="relative border-t py-16 offscreen-section sm:py-28"
     >
-      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+      <div className="container">
         <Reveal>
-          <p
-            aria-hidden="true"
-            className="font-mono text-xs text-muted-foreground"
-          >
-            01 // about
-          </p>
-          <h2
-            id="about-heading"
-            className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl"
-          >
+          <SectionHeading id="about-heading" command="cat about.md">
             About
-          </h2>
+          </SectionHeading>
         </Reveal>
 
-        <div className="mt-12 grid items-center gap-12 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-16">
-          <Reveal className="mx-auto w-full max-w-xs lg:max-w-none">
-            <figure className="relative overflow-hidden rounded-xl border border-primary/20 bg-card">
+        <Reveal amount="some" className="mt-6 sm:mt-8">
+          <EditorWindow
+            tab={{ name: "about.md", kind: "md" }}
+            bodyClassName="grid gap-6 p-4 sm:p-6 lg:grid-cols-[minmax(0,20rem)_2.75rem_minmax(0,1fr)] lg:gap-0 lg:p-0"
+          >
+            <figure className="relative mx-auto w-full max-w-60 overflow-hidden rounded-lg border border-primary/20 bg-surface-chrome sm:max-w-xs lg:m-8 lg:max-w-none">
               <div aria-hidden="true" className="absolute inset-0 hero-grid" />
               <div
                 aria-hidden="true"
@@ -50,7 +48,7 @@ export function About() {
                 width={profile.photo.width}
                 height={profile.photo.height}
                 alt={`Portrait of ${profile.name}`}
-                sizes="(min-width: 1024px) 22rem, 20rem"
+                sizes="(min-width: 1024px) 20rem, 15rem"
                 className="relative h-auto w-full mask-[linear-gradient(to_bottom,black_70%,transparent)]"
               />
               {CORNERS.map((corner) => (
@@ -61,35 +59,37 @@ export function About() {
                 />
               ))}
             </figure>
-          </Reveal>
 
-          <div className="max-w-[65ch]">
-            <Reveal delay={0.1}>
+            <Gutter lines={16} className="hidden pt-8 lg:block" />
+
+            <div className="max-w-[65ch] lg:py-8 lg:pr-12 lg:pl-7">
               <p className="text-lg leading-relaxed text-foreground sm:text-xl">
                 {lead}
               </p>
-            </Reveal>
-            {rest.map((paragraph, i) => (
-              <Reveal key={i} delay={0.15 + i * 0.05}>
-                <p className="mt-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
+              {rest.map((paragraph, i) => (
+                <p
+                  key={i}
+                  className="mt-5 text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg"
+                >
                   {paragraph}
                 </p>
-              </Reveal>
-            ))}
-            <Reveal delay={0.3} className="mt-10">
+              ))}
               <a
                 href={profile.repoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={buttonVariants({ variant: "outline", size: "lg" })}
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "mt-8 h-11 w-full px-4 sm:w-auto"
+                )}
               >
                 Source code
                 <ArrowUpRight aria-hidden="true" />
                 <span className="sr-only">(opens in a new tab)</span>
               </a>
-            </Reveal>
-          </div>
-        </div>
+            </div>
+          </EditorWindow>
+        </Reveal>
       </div>
     </section>
   )

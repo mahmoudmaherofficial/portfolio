@@ -163,7 +163,7 @@ export function ProjectCompactCard({
         >
           {shown.map((tech) => (
             <li key={tech}>
-              <TechTag name={tech} />
+              <TechTag name={tech} variant="string" />
             </li>
           ))}
           {more > 0 && (
