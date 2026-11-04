@@ -116,7 +116,7 @@ Rich, using Framer Motion, with these constraints:
 - **Accessibility (WCAG AA basics):** color contrast, full keyboard navigation (including the lightbox), visible focus states, alt text on every image, semantic headings, labelled form fields.
 - **Images:** `next/image` with explicit sizes. 3–4 screenshots per project.
 - **SEO:** page metadata, dynamic OG image via `next/og` (`src/app/opengraph-image.tsx`, no hand-made static OG file), `sitemap.ts`, `robots.ts`.
-  - Title: `Mahmoud Maher — Front-End Developer`.
+  - Title: `Mahmoud Maher - Front-End Developer`.
 
 ### Public repo rules
 
