@@ -23,8 +23,26 @@ export type ExperienceEntry = {
   company?: string
   /** Display period, e.g. "Oct 2024 – Present". */
   period: string
+  /** Short scope label shown in the meta line, e.g. "team of 4". */
+  badge?: string
   summary: string
+  /** Key pieces of work, one per line. */
+  highlights?: string[]
+  /** Slugs of projects shipped in this role. Only projects that render are listed. */
+  shipped?: string[]
   tech: string[]
+}
+
+/** One headline number in the Experience section, shown as a JSON key and value. */
+export type ImpactStat = {
+  /** JSON-style key, e.g. "clientProjects". */
+  key: string
+  /** A number renders as a figure; a string renders as a quoted code string. */
+  value: number | string
+  /** Adds an accent "+" after a number, for "10+" style counts. */
+  plus?: boolean
+  /** Shown as a code comment under the value. */
+  note: string
 }
 
 /** File types used by the editor chrome (tabs, Explorer, status bar). */
