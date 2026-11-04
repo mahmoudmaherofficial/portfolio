@@ -15,5 +15,5 @@ export const profile: Profile = {
     "What I care about: clean, typed code, interfaces that are fast and easy to use, and shipping on time.",
   ],
   repoUrl: "https://github.com/mahmoudmaherofficial/portfolio",
-  photo: { src: "/me.webp", width: 720, height: 960 },
+  photo: { src: "/avatar.webp", width: 720, height: 960 },
 }

@@ -9,15 +9,9 @@ import { buttonVariants } from "@/components/ui/button"
 import { profile } from "@/content/profile"
 import { cn } from "@/lib/utils"
 
-const CORNERS = [
-  "left-3 top-3 border-l border-t",
-  "right-3 top-3 border-r border-t",
-  "bottom-3 left-3 border-b border-l",
-  "bottom-3 right-3 border-b border-r",
-]
-
 export function About() {
   const [lead, ...rest] = profile.about
+  const photoName = profile.photo.src.split("/").pop()
 
   return (
     <section
@@ -37,28 +31,41 @@ export function About() {
             tab={{ name: "about.md", kind: "md" }}
             bodyClassName="grid gap-6 p-4 sm:p-6 lg:grid-cols-[minmax(0,22rem)_2.75rem_minmax(0,1fr)] lg:gap-0 lg:p-0"
           >
-            <figure className="relative mx-auto aspect-3/4 w-full max-w-60 self-start overflow-hidden rounded-lg border border-primary/20 bg-surface-chrome sm:max-w-xs lg:m-8 lg:w-auto lg:max-w-none">
-              <div aria-hidden="true" className="absolute inset-0 hero-grid" />
-              <div
+            {/* The photo "opened" in a terminal box: name set into the top edge, size into the bottom. */}
+            <div className="mx-auto w-full max-w-60 self-start sm:max-w-xs lg:m-8 lg:w-auto lg:max-w-none">
+              <p
                 aria-hidden="true"
-                className="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-t from-primary/20 to-transparent"
-              />
-              <Image
-                src={profile.photo.src}
-                width={profile.photo.width}
-                height={profile.photo.height}
-                alt={`Portrait of ${profile.name}`}
-                sizes="(min-width: 1024px) 18rem, 20rem"
-                className="relative size-full mask-[linear-gradient(to_bottom,black_70%,transparent)] object-cover object-top"
-              />
-              {CORNERS.map((corner) => (
+                className="mb-3.5 font-mono text-xs text-syntax-comment"
+              >
+                <span className="text-syntax-keyword">$</span> open {photoName}
+              </p>
+              <figure className="relative rounded-xs border border-primary/45 bg-background/60 p-3.5">
                 <span
-                  key={corner}
                   aria-hidden="true"
-                  className={`absolute size-4 border-primary/60 ${corner}`}
+                  className="absolute -top-2 left-3 bg-surface-pane px-1.5 font-mono text-[0.6875rem] leading-3.5 text-primary"
+                >
+                  ┤ {photoName} ├
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="absolute right-3 -bottom-2 bg-surface-pane px-1.5 font-mono text-[0.6875rem] leading-3.5 text-syntax-comment"
+                >
+                  {profile.photo.width}×{profile.photo.height}
+                </span>
+                <Image
+                  src={profile.photo.src}
+                  width={profile.photo.width}
+                  height={profile.photo.height}
+                  alt={`Portrait of ${profile.name}`}
+                  sizes="(min-width: 1024px) 18rem, 20rem"
+                  className="aspect-3/4 w-full object-cover object-top saturate-90"
                 />
-              ))}
-            </figure>
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-3.5 bg-[repeating-linear-gradient(to_bottom,rgb(0_0_0/0.18)_0_1px,transparent_1px_3px)]"
+                />
+              </figure>
+            </div>
 
             <Gutter lines={16} className="hidden pt-8 lg:block" />
 

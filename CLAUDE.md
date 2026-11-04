@@ -67,7 +67,7 @@ src/
 ├── content/              # typed content: profile.ts, projects.ts, skills.ts, experience.ts
 ├── hooks/                # client hooks (useThing.ts)
 └── lib/                  # utils, types, motion helpers
-public/                   # me.webp, favicon.png, resume PDF, projects/<slug>/
+public/                   # avatar.webp, favicon.png, resume PDF, projects/<slug>/
 ```
 
 ### Naming
