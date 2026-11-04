@@ -71,7 +71,7 @@ export const ScrollStackItem = ({
     {children}
     <span
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 rounded-[inherit] bg-background opacity-[var(--scroll-stack-dim,0)]"
+      className="pointer-events-none absolute inset-0 rounded-[inherit] bg-background opacity-(--scroll-stack-dim,0)"
     />
   </div>
 )
