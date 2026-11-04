@@ -72,6 +72,8 @@ export type Site = {
 
 export type Skill = {
   name: string
+  /** Name to look for in project tech lists when it differs from `name`, e.g. "Next.js". */
+  match?: string
   /** Where the skill can be seen in use, e.g. a repo. Omit when there is nothing to link. */
   href?: string
 }
