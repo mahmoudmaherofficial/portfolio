@@ -1,3 +1,4 @@
+import { EditorWindow } from "@/components/ide/EditorWindow"
 import { Tok, type TokKind } from "@/components/ide/Tok"
 import { profile } from "@/content/profile"
 import { profileCodeLines, type CodeTokenKind } from "@/lib/profile-code"
@@ -12,33 +13,61 @@ const TOKEN_KIND: Record<CodeTokenKind, TokKind> = {
 }
 
 /**
- * Decorative code view of the profile. Hidden from assistive tech because
- * every value is already in the hero as real text.
+ * Decorative code view of the profile in an editor window. The code is hidden from assistive
+ * tech because every value is already in the hero as real text; the resume tab is a real link.
  */
-export function HeroCodeCard({ className }: { className?: string }) {
+export function HeroCodeCard({
+  resumeHref,
+  className,
+}: {
+  resumeHref?: string
+  className?: string
+}) {
   const lines = profileCodeLines(profile)
+  const highlight = lines.findIndex((line) =>
+    line.some((token) => token.kind === "key" && token.text === "availability")
+  )
 
   return (
-    <div
-      aria-hidden="true"
+    <EditorWindow
+      dots
+      tab={{ name: "profile.ts", kind: "ts" }}
+      extraTab={
+        resumeHref
+          ? {
+              name: "resume.pdf",
+              kind: "pdf",
+              href: resumeHref,
+              download: true,
+            }
+          : undefined
+      }
+      path={["src", "content", "profile.ts"]}
       className={cn(
-        "overflow-hidden rounded-xl border border-primary/20 bg-card text-card-foreground shadow-2xl shadow-primary/10 dark:shadow-primary/10",
+        "border-primary/25 shadow-2xl shadow-primary/15",
         className
       )}
     >
-      <div className="flex items-center gap-2 border-b px-4 py-3">
-        <span className="size-2.5 rounded-full bg-muted-foreground/30" />
-        <span className="size-2.5 rounded-full bg-muted-foreground/30" />
-        <span className="size-2.5 rounded-full bg-muted-foreground/30" />
-        <span className="ml-2 font-mono text-xs text-muted-foreground">
-          profile.ts
-        </span>
-      </div>
-      <pre className="overflow-x-auto p-4 font-mono text-[13px] leading-6">
+      <pre
+        aria-hidden="true"
+        className="overflow-x-auto py-3 font-mono text-xs leading-[1.375rem] sm:py-3.5 sm:text-[13px] sm:leading-[1.625rem]"
+      >
         <code>
           {lines.map((line, i) => (
-            <span key={i} className="block">
-              <span className="mr-4 inline-block w-4 text-right text-muted-foreground/50 select-none">
+            <span
+              key={i}
+              className={cn(
+                "block pr-4",
+                i === highlight &&
+                  "bg-primary/8 shadow-[inset_2px_0_0_var(--primary)]"
+              )}
+            >
+              <span
+                className={cn(
+                  "inline-block w-[1.875rem] pr-2.5 text-right select-none sm:w-11 sm:pr-4",
+                  i === highlight ? "text-primary" : "text-gutter"
+                )}
+              >
                 {i + 1}
               </span>
               {line.map((token, j) => (
@@ -55,6 +84,6 @@ export function HeroCodeCard({ className }: { className?: string }) {
           ))}
         </code>
       </pre>
-    </div>
+    </EditorWindow>
   )
 }
