@@ -4,34 +4,9 @@ import { useEffect, useState } from "react"
 import { Menu, X } from "lucide-react"
 
 import { buttonVariants } from "@/components/ui/button"
+import { useActiveSection } from "@/hooks/useActiveSection"
 import type { NavItem } from "@/lib/types"
 import { cn } from "@/lib/utils"
-
-/** Tracks which section sits in the middle band of the viewport. */
-function useActiveSection(ids: string[]): string | null {
-  const [active, setActive] = useState<string | null>(null)
-  const key = ids.join(",")
-
-  useEffect(() => {
-    const sections = key
-      .split(",")
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null)
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setActive(entry.target.id)
-        }
-      },
-      { rootMargin: "-45% 0px -50% 0px" }
-    )
-    sections.forEach((section) => observer.observe(section))
-    return () => observer.disconnect()
-  }, [key])
-
-  return active
-}
 
 const LINK =
   "rounded-md px-3 py-2 font-mono text-xs text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 aria-[current=location]:text-primary"
