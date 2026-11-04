@@ -28,7 +28,9 @@ async function loadGoogleFont(family: string, weight: number, text: string) {
   const css = await (
     await fetch(`https://fonts.googleapis.com/css2?${query}`)
   ).text()
-  const url = css.match(/src: url\((.+?)\) format\('(?:opentype|truetype)'\)/)?.[1]
+  const url = css.match(
+    /src: url\((.+?)\) format\('(?:opentype|truetype)'\)/
+  )?.[1]
   if (!url) throw new Error(`Could not load font: ${family} ${weight}`)
   return (await fetch(url)).arrayBuffer()
 }
@@ -44,59 +46,57 @@ export default async function OpengraphImage() {
   ])
 
   return new ImageResponse(
-    (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: 80,
+        backgroundColor: colors.background,
+        backgroundImage: `linear-gradient(${colors.grid} 1px, transparent 1px), linear-gradient(90deg, ${colors.grid} 1px, transparent 1px)`,
+        backgroundSize: "60px 60px",
+        color: colors.foreground,
+        fontFamily: "Geist Mono",
+      }}
+    >
+      <div style={{ display: "flex", fontSize: 36 }}>{site.logo}</div>
+
       <div
         style={{
-          width: "100%",
-          height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
-          padding: 80,
-          backgroundColor: colors.background,
-          backgroundImage: `linear-gradient(${colors.grid} 1px, transparent 1px), linear-gradient(90deg, ${colors.grid} 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
-          color: colors.foreground,
-          fontFamily: "Geist Mono",
+          fontFamily: "Geist",
         }}
       >
-        <div style={{ display: "flex", fontSize: 36 }}>{site.logo}</div>
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            fontFamily: "Geist",
-          }}
-        >
-          <div style={{ display: "flex", fontSize: 96, letterSpacing: -3 }}>
-            {profile.name}
-          </div>
-          <div
-            style={{
-              display: "flex",
-              fontSize: 52,
-              letterSpacing: -1,
-              color: colors.accent,
-            }}
-          >
-            {profile.title}
-          </div>
+        <div style={{ display: "flex", fontSize: 96, letterSpacing: -3 }}>
+          {profile.name}
         </div>
-
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
-            fontSize: 26,
-            color: colors.muted,
+            fontSize: 52,
+            letterSpacing: -1,
+            color: colors.accent,
           }}
         >
-          <span>{profile.availability}</span>
-          <span>{host}</span>
+          {profile.title}
         </div>
       </div>
-    ),
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          fontSize: 26,
+          color: colors.muted,
+        }}
+      >
+        <span>{profile.availability}</span>
+        <span>{host}</span>
+      </div>
+    </div>,
     {
       ...size,
       fonts: [

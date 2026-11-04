@@ -13,8 +13,9 @@ import dynamic from "next/dynamic"
 import { ArrowRight } from "lucide-react"
 
 import { TechTag } from "@/components/TechTag"
+import { ProjectMeta } from "@/components/sections/ProjectInfo"
 import { ShotCarousel } from "@/components/sections/ShotCarousel"
-import { metaOf, type ProjectView } from "@/lib/projects"
+import type { ProjectView } from "@/lib/projects"
 
 // The sheet (and its dialog code) is fetched the first time a project is opened.
 const loadSheet = () => import("@/components/sections/ProjectSheetDialog")
@@ -144,14 +145,7 @@ export function ProjectCompactCard({
         autoplay
       />
 
-      <p className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs text-muted-foreground">
-        {metaOf(project)}
-        {project.badge && (
-          <span className="rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-primary">
-            {project.badge}
-          </span>
-        )}
-      </p>
+      <ProjectMeta project={project} className="mt-4" />
       <h3
         id={`${project.slug}-compact-title`}
         className="mt-2 text-xl font-semibold tracking-tight"

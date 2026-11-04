@@ -1,13 +1,9 @@
 "use client"
 
-// Adapted from ReactBits ScrollStack (TS + Tailwind):
-// - window scroll only; the wheel-hijacking smooth scroll and snap are removed
-// - cards pin centered in the space below `stackPosition`, or below an optional header while it is sticky
-// - a card taller than the space left scrolls fully into view first, then pins by its bottom edge
-// - cards dim toward the theme background instead of black; no hardcoded colors or card size
-// - under reduced motion cards still stack but do not scale
-// - keyboard focus is never left behind the header, under the next card or off-screen
-// - reports the active card and accepts jump requests via window events (see StackProgress)
+// Adapted from ReactBits ScrollStack (TS + Tailwind). Cards pin below a sticky header and each
+// next card stacks over the previous one, which shrinks and dims toward the theme background.
+// Uses window scroll only (no scroll hijacking), keeps keyboard focus visible, and reports the
+// card on top to StackProgress through window events.
 
 import {
   Children,
@@ -20,38 +16,24 @@ import {
 
 import { cn } from "@/lib/utils"
 
-/** Fired on `window` when the card on top of the stack changes. */
+/** Fired on `window` with the index of the card on top of the stack. */
 export const STACK_CHANGE = "scrollstack:change"
-/** Dispatch on `window` to scroll a card to the top of the stack. */
+/** Dispatch on `window` with a card index to scroll that card to the top of the stack. */
 export const STACK_GOTO = "scrollstack:goto"
-export type StackChangeDetail = { id: string; index: number; total: number }
-export type StackGotoDetail = { id: string; index: number }
 
-export interface ScrollStackProps {
-  children?: ReactNode
-  className?: string
-  /** Names this stack in the change/goto events. */
-  id?: string
-  /** Id of a sticky element above the stack; cards pin just below its bottom edge. */
-  headerId?: string
-  /** Highest a card may pin, in px from the top of the viewport (e.g. below a fixed site header). */
-  stackPosition?: number
-  /** Space between the header (or `stackPosition`) and the first pinned card, in px. */
-  headerGap?: number
-  /** Scroll distance between cards before the next one starts covering. */
-  itemDistance?: number
-  /** Vertical offset between pinned cards, so the edge of each one stays visible. */
-  itemStackDistance?: number
-  /** How much each card shrinks per card stacked on top of it. */
-  itemScale?: number
-  /** Smallest scale a covered card can reach. */
-  baseScale?: number
-  /** How much each covering card dims the ones below (0–1). */
-  dimAmount?: number
-  /** Extra scroll after the last card pins, before the section moves on. */
-  holdDistance?: number
-}
-
+/** Space between the header and the first pinned card. */
+const HEADER_GAP = 16
+/** Scroll distance between cards before the next one starts covering. */
+const ITEM_DISTANCE = 100
+/** Vertical offset between pinned cards, so the edge of each one stays visible. */
+const ITEM_OFFSET = 16
+/** How much a card shrinks per card stacked on top of it, and the smallest it gets. */
+const ITEM_SCALE = 0.03
+const MIN_SCALE = 0.9
+/** How much each covering card dims the ones below. */
+const DIM = 0.35
+/** Extra scroll after the last card pins, before the section moves on. */
+const HOLD_DISTANCE = 120
 /** Gap kept between a tall card's bottom edge and the bottom of the viewport. */
 const BOTTOM_GAP = 16
 
@@ -76,52 +58,27 @@ export const ScrollStackItem = ({
   </div>
 )
 
-const ScrollStack = ({
+export default function ScrollStack({
   children,
   className,
-  id,
   headerId,
-  stackPosition = 72,
-  headerGap = 16,
-  itemDistance = 100,
-  itemStackDistance = 16,
-  itemScale = 0.03,
-  baseScale = 0.9,
-  dimAmount = 0.35,
-  holdDistance = 120,
-}: ScrollStackProps) => {
+  stackPosition,
+}: {
+  children?: ReactNode
+  className?: string
+  /** Id of a sticky element above the stack; while it is sticky, cards pin below it. */
+  headerId: string
+  /** Highest a card may pin, in px from the top of the viewport (e.g. below a fixed site header). */
+  stackPosition: number
+}) {
   const innerRef = useRef<HTMLDivElement>(null)
-  const settingsRef = useRef({
-    id,
-    headerId,
-    stackPosition,
-    headerGap,
-    itemStackDistance,
-    itemScale,
-    baseScale,
-    dimAmount,
-  })
-  const scheduleRef = useRef<(() => void) | null>(null)
   const items = Children.toArray(children)
 
   useLayoutEffect(() => {
-    settingsRef.current = {
-      id,
-      headerId,
-      stackPosition,
-      headerGap,
-      itemStackDistance,
-      itemScale,
-      baseScale,
-      dimAmount,
-    }
-    scheduleRef.current?.()
-  })
-
-  useLayoutEffect(() => {
     const inner = innerRef.current
-    if (!inner) return undefined
+    if (!inner) return
 
+    const header = document.getElementById(headerId)
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)")
     const cache = new Map<string, string>()
     let frame = 0
@@ -140,22 +97,16 @@ const ScrollStack = ({
       apply(value)
     }
 
-    /** Bottom edge of the pinned header: its sticky `top` plus its height. */
+    /** Top of the space cards can pin in: below the header while it is sticky (phones only). */
     const stackTop = () => {
-      const settings = settingsRef.current
-      const header = settings.headerId
-        ? document.getElementById(settings.headerId)
-        : null
-      // The header only counts while it is actually sticky (e.g. pinned on phones only).
-      if (!header || getComputedStyle(header).position !== "sticky")
-        return settings.stackPosition + settings.headerGap
-      const top = parseFloat(getComputedStyle(header).top) || 0
-      return top + header.offsetHeight + settings.headerGap
+      if (!header) return stackPosition + HEADER_GAP
+      const style = getComputedStyle(header)
+      if (style.position !== "sticky") return stackPosition + HEADER_GAP
+      return (parseFloat(style.top) || 0) + header.offsetHeight + HEADER_GAP
     }
 
     const update = () => {
       frame = 0
-      const settings = settingsRef.current
       const slots = slotsOf()
       if (!slots.length) return
 
@@ -166,16 +117,13 @@ const ScrollStack = ({
       // Cards share one band centered on the tallest card that fits, each pinning one step
       // lower than the last so earlier cards peek out above it. A card too tall for the
       // viewport pins by its bottom edge instead, so it scrolls fully into view first.
-      const offset = settings.itemStackDistance
       const room = viewHeight - base - BOTTOM_GAP
       const band = Math.max(0, ...heights.filter((h) => h <= room))
-      // Center within the space below the header (or `stackPosition`).
-      const first =
-        base + (viewHeight - base - band - (slots.length - 1) * offset) / 2
-      // Clamp the band as a whole, so the steps between cards survive near the header.
-      const start = Math.max(first, base)
+      const centered =
+        base + (viewHeight - base - band - (slots.length - 1) * ITEM_OFFSET) / 2
+      const start = Math.max(centered, base)
       pins = heights.map((height, i) =>
-        Math.min(start + i * offset, viewHeight - height - BOTTOM_GAP)
+        Math.min(start + i * ITEM_OFFSET, viewHeight - height - BOTTOM_GAP)
       )
       slots.forEach((slot, i) => {
         write(`top${i}`, `${Math.round(pins[i])}px`, (value) => {
@@ -188,42 +136,32 @@ const ScrollStack = ({
       // The card on top: the last one that covers at least half of the card before it.
       let top = 0
       for (let j = 1; j < slots.length; j++) {
-        const start = pins[j - 1] + heights[j - 1]
-        const span = Math.max(1, start - pins[j])
-        const cover = Math.min(1, Math.max(0, (start - tops[j]) / span))
+        const bottom = pins[j - 1] + heights[j - 1]
+        const span = Math.max(1, bottom - pins[j])
+        const cover = Math.min(1, Math.max(0, (bottom - tops[j]) / span))
         for (let i = 0; i < j; i++) depths[i] += cover
         if (cover >= 0.5) top = j
       }
-      if (top !== active && settings.id) {
+      if (top !== active) {
         active = top
         window.dispatchEvent(
-          new CustomEvent<StackChangeDetail>(STACK_CHANGE, {
-            detail: { id: settings.id, index: top, total: slots.length },
-          })
+          new CustomEvent<number>(STACK_CHANGE, { detail: top })
         )
       }
 
-      const dimStep = Math.min(Math.max(settings.dimAmount, 0), 1)
       slots.forEach((slot, i) => {
         const card = slot.firstElementChild as HTMLElement | null
         if (!card) return
         const depth = depths[i]
-        const scale = Math.max(
-          Math.min(settings.baseScale, 1),
-          1 - depth * settings.itemScale
-        )
+        const scale = Math.max(MIN_SCALE, 1 - depth * ITEM_SCALE)
         const transform =
           depth < 0.0005 || motion.matches ? "" : `scale(${scale.toFixed(4)})`
         write(`transform${i}`, transform, (value) => {
           card.style.transform = value
         })
-        write(
-          `dim${i}`,
-          (1 - Math.pow(1 - dimStep, depth)).toFixed(3),
-          (value) => {
-            card.style.setProperty("--scroll-stack-dim", value)
-          }
-        )
+        write(`dim${i}`, (1 - Math.pow(1 - DIM, depth)).toFixed(3), (value) => {
+          card.style.setProperty("--scroll-stack-dim", value)
+        })
       })
     }
 
@@ -239,8 +177,6 @@ const ScrollStack = ({
         ? spacer.getBoundingClientRect().bottom
         : inner.getBoundingClientRect().top
     }
-
-    const smooth = (): ScrollBehavior => (motion.matches ? "instant" : "smooth")
 
     // Keyboard focus must never sit behind the pinned header, under the next card or off-screen.
     const onFocusIn = (event: FocusEvent) => {
@@ -259,9 +195,8 @@ const ScrollStack = ({
       if (box.top >= clear && box.bottom <= window.innerHeight && !covered)
         return
 
-      // Bring the card to where it has just pinned: fully in view, next card not yet over it.
-      // If the control sits in the part of a tall card hidden under the header, go further
-      // so the control lands just below the header.
+      // Bring the card to where it has just pinned. If the control sits in the part of a tall
+      // card hidden under the header, go further so it lands just below the header.
       const offset = box.top - slot.getBoundingClientRect().top
       const landing = Math.max(pins[index] ?? clear, clear + 8 - offset)
       window.scrollTo({
@@ -270,34 +205,25 @@ const ScrollStack = ({
       })
     }
 
-    // Jump requests, e.g. from the progress indicator: bring a card to the top of the stack.
     const onGoto = (event: Event) => {
-      const { id: target, index } = (event as CustomEvent<StackGotoDetail>)
-        .detail
+      const index = (event as CustomEvent<number>).detail
       const slot = slotsOf()[index]
-      if (!slot || target !== settingsRef.current.id) return
-      const base = stackTop()
-      // A card that fits lands at its pin point; a tall one (pinned higher) lands with its top
-      // just below the header so it can be read from the start.
-      const landing = Math.max(pins[index] ?? base, base)
+      if (!slot) return
+      const landing = Math.max(pins[index] ?? 0, stackTop())
       window.scrollTo({
         top: window.scrollY + flowTop(slot) - landing + 1,
-        behavior: smooth(),
+        behavior: motion.matches ? "instant" : "smooth",
       })
     }
 
     const observer = new ResizeObserver(schedule)
     observer.observe(inner)
-    const header = settingsRef.current.headerId
-      ? document.getElementById(settingsRef.current.headerId)
-      : null
     if (header) observer.observe(header)
     window.addEventListener("scroll", schedule, { passive: true })
     window.addEventListener("resize", schedule)
     motion.addEventListener("change", schedule)
     inner.addEventListener("focusin", onFocusIn)
     window.addEventListener(STACK_GOTO, onGoto)
-    scheduleRef.current = schedule
     update()
 
     return () => {
@@ -308,15 +234,14 @@ const ScrollStack = ({
       motion.removeEventListener("change", schedule)
       inner.removeEventListener("focusin", onFocusIn)
       window.removeEventListener(STACK_GOTO, onGoto)
-      scheduleRef.current = null
     }
-  }, [])
+  }, [headerId, stackPosition])
 
   return (
     <div className={cn("relative w-full", className)}>
       <div ref={innerRef} className="relative">
         {items.map((child, index) => {
-          const gap = itemDistance - (items.length - index) * itemStackDistance
+          const gap = ITEM_DISTANCE - (items.length - index) * ITEM_OFFSET
           return (
             <Fragment
               key={isValidElement(child) ? (child.key ?? index) : index}
@@ -335,8 +260,8 @@ const ScrollStack = ({
                 className="sticky"
                 style={{
                   // Replaced after mount with the measured pin point.
-                  top: stackPosition + index * itemStackDistance,
-                  marginBottom: (items.length - 1 - index) * itemStackDistance,
+                  top: stackPosition + index * ITEM_OFFSET,
+                  marginBottom: (items.length - 1 - index) * ITEM_OFFSET,
                   zIndex: index + 1,
                 }}
               >
@@ -345,10 +270,8 @@ const ScrollStack = ({
             </Fragment>
           )
         })}
-        <div aria-hidden="true" style={{ height: holdDistance }} />
+        <div aria-hidden="true" style={{ height: HOLD_DISTANCE }} />
       </div>
     </div>
   )
 }
-
-export default ScrollStack

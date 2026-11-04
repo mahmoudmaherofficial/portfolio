@@ -2,14 +2,18 @@
 
 import type { RefObject } from "react"
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
-import { ArrowUpRight, ChevronLeft, ChevronRight, X } from "lucide-react"
+import { ChevronLeft, ChevronRight, X } from "lucide-react"
 
-import { TechTag } from "@/components/TechTag"
+import {
+  ProjectDetails,
+  ProjectLinks,
+  ProjectMeta,
+  ProjectTech,
+} from "@/components/sections/ProjectInfo"
 import { ShotCarousel } from "@/components/sections/ShotCarousel"
 import { buttonVariants } from "@/components/ui/button"
-import { metaOf, type ProjectView } from "@/lib/projects"
-
-const pad = (n: number) => String(n).padStart(2, "0")
+import type { ProjectView } from "@/lib/projects"
+import { pad } from "@/lib/utils"
 
 /**
  * Full-screen sheet with the whole project, for phones and tablets. Loaded on first open
@@ -82,77 +86,16 @@ export default function ProjectSheetDialog({
                   viewportClassName="aspect-16/10"
                 />
 
-                <p className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs text-muted-foreground">
-                  {metaOf(project)}
-                  {project.badge && (
-                    <span className="rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-primary">
-                      {project.badge}
-                    </span>
-                  )}
-                </p>
+                <ProjectMeta project={project} className="mt-6" />
                 <DialogPrimitive.Title className="mt-2 text-2xl font-semibold tracking-tight">
                   {project.title}
                 </DialogPrimitive.Title>
                 <DialogPrimitive.Description className="mt-3 leading-relaxed text-foreground/90">
                   {project.summary}
                 </DialogPrimitive.Description>
-
-                {(project.challenge || project.whatIDid) && (
-                  <dl className="mt-6 space-y-4 text-sm leading-relaxed">
-                    {project.challenge && (
-                      <div>
-                        <dt className="font-mono text-xs text-primary">
-                          Challenge
-                        </dt>
-                        <dd className="mt-1 text-muted-foreground">
-                          {project.challenge}
-                        </dd>
-                      </div>
-                    )}
-                    {project.whatIDid && (
-                      <div>
-                        <dt className="font-mono text-xs text-primary">
-                          What I did
-                        </dt>
-                        <dd className="mt-1 text-muted-foreground">
-                          {project.whatIDid}
-                        </dd>
-                      </div>
-                    )}
-                  </dl>
-                )}
-
-                <ul
-                  aria-label="Tech used"
-                  className="mt-6 flex flex-wrap gap-2"
-                >
-                  {project.tech.map((tech) => (
-                    <li key={tech}>
-                      <TechTag name={tech} />
-                    </li>
-                  ))}
-                </ul>
-
-                {project.links.length > 0 && (
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    {project.links.map((link) => (
-                      <a
-                        key={link.href}
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={buttonVariants({
-                          variant: "outline",
-                          size: "lg",
-                        })}
-                      >
-                        {link.label}
-                        <ArrowUpRight aria-hidden="true" />
-                        <span className="sr-only">(opens in a new tab)</span>
-                      </a>
-                    ))}
-                  </div>
-                )}
+                <ProjectDetails project={project} className="mt-6" />
+                <ProjectTech project={project} />
+                <ProjectLinks project={project} className="mt-6" />
               </div>
 
               {total > 1 && (

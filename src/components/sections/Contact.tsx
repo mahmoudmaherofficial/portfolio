@@ -20,11 +20,6 @@ function ChannelIcon({ kind }: { kind: ContactChannel["kind"] }) {
   )
 }
 
-const external = {
-  target: "_blank",
-  rel: "noopener noreferrer",
-} as const
-
 const focusRing = "outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
 
 export function Contact() {
@@ -58,7 +53,7 @@ export function Contact() {
 
         {email && (
           <Reveal delay={0.1} className="mt-10 w-full">
-            <SpotlightCard intensity={0.08} className="rounded-xl">
+            <SpotlightCard intensity={0.08}>
               <a
                 href={email.href}
                 className={`group/email flex min-h-16 items-center justify-center gap-2 rounded-xl border border-border px-4 py-5 font-mono text-xs transition-colors hover:border-primary/60 min-[400px]:text-sm sm:gap-3 sm:text-xl ${focusRing}`}
@@ -84,7 +79,8 @@ export function Contact() {
               <li key={channel.kind}>
                 <a
                   href={channel.href}
-                  {...external}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`group/link flex min-h-11 items-center gap-2 rounded-full border border-border px-4 font-mono text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground ${focusRing}`}
                 >
                   <ChannelIcon kind={channel.kind} />
