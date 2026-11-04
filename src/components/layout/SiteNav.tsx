@@ -18,7 +18,7 @@ export function SiteNav({ items }: { items: NavItem[] }) {
             <a
               href={`#${item.id}`}
               aria-current={active === item.id ? "location" : undefined}
-              className="flex items-center gap-2 border-r px-4 font-mono text-xs text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset aria-[current=location]:bg-surface-pane aria-[current=location]:text-foreground aria-[current=location]:shadow-[inset_0_2px_0_var(--primary)] xl:px-[1.125rem]"
+              className="flex items-center gap-2 border-r px-4 font-mono text-xs text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset aria-[current=location]:bg-surface-pane aria-[current=location]:text-foreground aria-[current=location]:shadow-[inset_0_2px_0_var(--primary)] xl:px-4.5"
             >
               <FileIcon kind={item.kind} />
               {item.file}

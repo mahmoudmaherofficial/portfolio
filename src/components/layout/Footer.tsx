@@ -1,11 +1,12 @@
 import { ArrowUpRight } from "lucide-react"
 
+import { Logo } from "@/components/layout/Logo"
 import { profile } from "@/content/profile"
 import { site } from "@/content/site"
 import type { NavItem } from "@/lib/types"
 
 const LINK =
-  "rounded-md font-mono text-xs text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+  "flex min-h-10 items-center rounded-md font-mono text-xs text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 sm:min-h-0"
 
 export function Footer({ nav }: { nav: NavItem[] }) {
   // Static page: the year is fixed at build time and refreshes on the next deploy.
@@ -13,26 +14,20 @@ export function Footer({ nav }: { nav: NavItem[] }) {
 
   return (
     <footer className="border-t">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6 md:flex-row md:items-start md:justify-between">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-10 sm:gap-8 sm:px-6 sm:py-12 md:flex-row md:items-start md:justify-between">
         <div>
-          <a
-            href="#hero"
-            className="rounded-md font-mono text-xl font-semibold tracking-tight outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-          >
-            {site.logo}
-            <span className="sr-only"> Back to top</span>
-          </a>
+          <Logo className="rounded-md text-xl" />
           <p className="mt-3 text-sm text-muted-foreground">
             {site.footerTagline}
           </p>
         </div>
 
         <nav aria-label="Footer">
-          <ul className="flex flex-wrap gap-x-6 gap-y-3">
+          <ul className="grid grid-cols-2 gap-x-6 sm:flex sm:flex-wrap sm:gap-y-3">
             {nav.map((item) => (
               <li key={item.id}>
                 <a href={`#${item.id}`} className={LINK}>
-                  {item.label}
+                  {item.file}
                 </a>
               </li>
             ))}
@@ -41,7 +36,7 @@ export function Footer({ nav }: { nav: NavItem[] }) {
                 href={profile.repoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${LINK} inline-flex items-center gap-1`}
+                className={`${LINK} gap-1`}
               >
                 Source code
                 <ArrowUpRight aria-hidden="true" className="size-3.5" />
