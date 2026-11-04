@@ -1,9 +1,13 @@
 "use client"
 
 import { useEffect, useState, useSyncExternalStore } from "react"
+import dynamic from "next/dynamic"
 import { useTheme } from "next-themes"
 
-import CursorGrid from "@/components/CursorGrid"
+// Only fetched when the highlight layer renders, so touch devices never download it.
+const CursorGrid = dynamic(() => import("@/components/CursorGrid"), {
+  ssr: false,
+})
 
 type GridColors = { primary: string; foreground: string }
 

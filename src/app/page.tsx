@@ -1,3 +1,5 @@
+import { Suspense } from "react"
+
 import { Footer } from "@/components/layout/Footer"
 import { Header } from "@/components/layout/Header"
 import { About } from "@/components/sections/About"
@@ -31,7 +33,9 @@ export default function Page() {
       <main>
         <Hero />
         {SECTIONS.map(({ id, Component }) => (
-          <Component key={id} />
+          <Suspense key={id}>
+            <Component />
+          </Suspense>
         ))}
       </main>
       <Footer nav={nav} />

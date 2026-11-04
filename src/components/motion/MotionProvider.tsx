@@ -1,11 +1,14 @@
 "use client"
 
-import { LazyMotion, MotionConfig, domAnimation } from "framer-motion"
+import { LazyMotion, MotionConfig } from "framer-motion"
 
-/** Loads Framer Motion's DOM features once and honors the visitor's reduced-motion setting. */
+/** Animation features load in their own chunk after the page is interactive. */
+const loadFeatures = () => import("./features").then((mod) => mod.default)
+
+/** Loads Framer Motion's DOM features on demand and honors the visitor's reduced-motion setting. */
 export function MotionProvider({ children }: { children: React.ReactNode }) {
   return (
-    <LazyMotion features={domAnimation} strict>
+    <LazyMotion features={loadFeatures} strict>
       <MotionConfig reducedMotion="user">{children}</MotionConfig>
     </LazyMotion>
   )
