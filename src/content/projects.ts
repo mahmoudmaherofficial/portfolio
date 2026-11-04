@@ -28,7 +28,32 @@ export const projects: Project[] = [
       "Recharts",
     ],
     links: [],
-    screenshots: [],
+    screenshots: [
+      {
+        src: "/projects/sports-analytics/01-dashboard.webp",
+        width: 1920,
+        height: 1080,
+        alt: "Dashboard with this month's performance KPIs, a six-month average KPI chart, top performers and players to watch",
+      },
+      {
+        src: "/projects/sports-analytics/02-login.webp",
+        width: 1920,
+        height: 1080,
+        alt: "Sign-in page with a fencer photo and the platform's Achieve, Develop, Analyze tagline",
+      },
+      {
+        src: "/projects/sports-analytics/03-reports.webp",
+        width: 1920,
+        height: 1080,
+        alt: "Monthly reports ranking players by final KPI, with training attendance and physical test scores",
+      },
+      {
+        src: "/projects/sports-analytics/04-championships.webp",
+        width: 1920,
+        height: 1080,
+        alt: "Championships list with each event's level, dates, medal result and delegation size",
+      },
+    ],
   },
   {
     slug: "metal-construction",
@@ -40,8 +65,33 @@ export const projects: Project[] = [
     whatIDid:
       "Built a fully bilingual Arabic/English site with RTL support, SEO setup, and handled deployment and launch.",
     tech: ["Next.js", "Tailwind CSS", "i18n / RTL", "SEO"],
-    links: [],
-    screenshots: [],
+    links: [{ label: "Live site", href: "https://alarab-construction.com/" }],
+    screenshots: [
+      {
+        src: "/projects/metal-construction/01-hero.webp",
+        width: 1920,
+        height: 908,
+        alt: "English homepage hero with a construction site photo and a Request a Quote button",
+      },
+      {
+        src: "/projects/metal-construction/02-home-arabic.webp",
+        width: 1920,
+        height: 1080,
+        alt: "Arabic homepage in a right-to-left layout, with workers on site in the hero photo",
+      },
+      {
+        src: "/projects/metal-construction/03-production-line.webp",
+        width: 1920,
+        height: 1080,
+        alt: "Production line section listing the company's fabrication lines next to factory photos",
+      },
+      {
+        src: "/projects/metal-construction/04-projects.webp",
+        width: 1920,
+        height: 1080,
+        alt: "Projects section with category filters and cards for completed projects",
+      },
+    ],
   },
   {
     slug: "activity-watcher",
@@ -66,7 +116,32 @@ export const projects: Project[] = [
       "Docker",
     ],
     links: [],
-    screenshots: [],
+    screenshots: [
+      {
+        src: "/projects/activity-watcher/01-activity-overview.webp",
+        width: 1919,
+        height: 1079,
+        alt: "Activity page for one user: date filters, weekly totals and a chart of active hours per day",
+      },
+      {
+        src: "/projects/activity-watcher/02-application-usage-dark.webp",
+        width: 1919,
+        height: 1079,
+        alt: "Dark mode view of daily work versus idle time and the top applications by active time",
+      },
+      {
+        src: "/projects/activity-watcher/03-top-users.webp",
+        width: 1919,
+        height: 1079,
+        alt: "Overview dashboard ranking users by working and idle hours, with names blurred",
+      },
+      {
+        src: "/projects/activity-watcher/04-departments.webp",
+        width: 1919,
+        height: 1079,
+        alt: "Departments page with user counts per department and a distribution pie chart",
+      },
+    ],
   },
   {
     slug: "alarab-erp",
@@ -96,11 +171,37 @@ export const projects: Project[] = [
       "Vercel",
     ],
     links: [
+      { label: "Live site", href: "https://luxelanestore.vercel.app/" },
       {
         label: "GitHub",
         href: "https://github.com/mahmoudmaherofficial/luxelane-frontend",
       },
     ],
-    screenshots: [],
+    screenshots: [
+      {
+        src: "/projects/luxelane/01-storefront-hero.webp",
+        width: 1919,
+        height: 1076,
+        alt: "Storefront hero with a clothing store photo and a Discover Now button",
+      },
+      {
+        src: "/projects/luxelane/02-favorites.webp",
+        width: 1919,
+        height: 1079,
+        alt: "Our Favorites product carousel with prices, discounts and color options",
+      },
+      {
+        src: "/projects/luxelane/03-admin-dashboard.webp",
+        width: 1915,
+        height: 1077,
+        alt: "Admin dashboard home with cards for products, orders, customers, analytics, payments and settings",
+      },
+      {
+        src: "/projects/luxelane/04-products.webp",
+        width: 1919,
+        height: 1079,
+        alt: "Admin products table with category, price, discount, stock, sizes and colors",
+      },
+    ],
   },
 ]
