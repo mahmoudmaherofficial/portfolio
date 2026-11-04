@@ -9,7 +9,7 @@ export const skillGroups: SkillGroup[] = [
     name: "Front-End",
     skills: [
       { name: "React" },
-      { name: "Next.js (App Router, SSR/SSG)" },
+      { name: "Next.js (App Router, SSR/SSG)", match: "Next.js" },
       { name: "TypeScript" },
       { name: "JavaScript" },
       { name: "HTML5" },
@@ -48,7 +48,7 @@ export const skillGroups: SkillGroup[] = [
     name: "Motion",
     skills: [{ name: "Framer Motion" }],
     proof: {
-      label: "proof: this portfolio's public repo",
+      label: "this portfolio's public repo",
       href: profile.repoUrl,
     },
   },
