@@ -1,6 +1,6 @@
 # Mahmoud Maher - Front-End Developer
 
-I build fast web apps with Next.js, React and TypeScript, from a client dashboard used daily by a 25+ person team to bilingual Arabic/English websites.
+I build dashboards and bilingual web apps with Next.js, React and TypeScript. My work includes an analytics platform for a UAE sports club and a tracker a 25+ person team uses every day.
 
 **[Live site](https://mahmoudmaher.site)** · **[Resume (PDF)](https://mahmoudmaher.site/Mahmoud-Maher-Resume.pdf)** · **[LinkedIn](https://www.linkedin.com/in/mahmoudmaherofficial2/)** · **[Email](mailto:mahmoudmaherofficial@gmail.com)**
 
@@ -10,11 +10,11 @@ Menofia, Egypt · Cairo time (EET) · Open to remote & relocation (Gulf)
 
 ## About
 
-I'm a front-end developer focused on Next.js, React and TypeScript. Since 2024 I've delivered 10+ projects for clients: admin dashboards, management systems, company websites and e-commerce stores, mostly replacing paper and Excel workflows with tools teams actually use every day.
+Hi, I'm Mahmoud. I'm a front-end developer in Egypt, and I build the tools teams run their work on: admin dashboards, management systems, company websites and e-commerce stores.
 
-I started with a front-end internship at NTG Clarity, building role-based dashboards for a hospital management system. Since then I've owned projects end to end, so I'm comfortable working with the backend and deployment side when a project needs it (NestJS, Express, MongoDB, MySQL, Docker).
+I started in July 2024 with an internship at NTG Clarity, building role-based dashboards for a hospital management system. Since then I've shipped 10+ projects for clients as a freelancer, often replacing paper and Excel with tools people open every day. I owned most of them end to end, so I'm comfortable with the backend and deployment too (NestJS, Express, MongoDB, MySQL, Docker).
 
-What I care about: clean, typed code, interfaces that are fast and easy to use, and shipping on time.
+I care about typed, readable code, interfaces that feel fast, and shipping when I said I would.
 
 ## Selected work
 
@@ -30,11 +30,11 @@ Analytics platform for a UAE-based sports club, tracking 100+ athletes across mu
 
 _Client Project · Full-Stack Developer_
 
-Team activity tracker used daily by a team of 25+ members. Built secure auth with JWT access/refresh tokens in HTTP-only cookies and role-based access (Admin/Member), dashboards with charts, and search, filters and pagination. Deployed with Docker on the client's server.
+Activity tracker used daily by a 25+ person team. Built secure auth with JWT access/refresh tokens in HTTP-only cookies and role-based access (Admin/Member), dashboards with charts, and search, filters and pagination. Deployed with Docker on the client's server.
 
 `Next.js` `TypeScript` `TanStack Query` `React Hook Form` `Zod` `Recharts` `Node.js` `Express.js` `MongoDB` `Docker`
 
-### Corporate Website — Metal Construction Company
+### Bilingual Website for Alarab Construction
 
 _Client Project · Front-End Developer_
 
@@ -53,7 +53,7 @@ Full-stack e-commerce store with a searchable product catalog and user accounts.
 ## Experience
 
 **Freelance Front-End Developer** · Oct 2024 – Present
-10+ client projects: dashboards, management systems, company websites and e-commerce stores.
+Built and shipped 10+ client projects end to end: dashboards, management systems, company websites and e-commerce stores.
 
 **Front-End Intern, NTG Clarity** · Jul 2024 – Sep 2024
 Built role-based dashboards (admin/doctor/patient), appointment booking, and protected routes for a hospital management system in a team of 4, using React and a REST API.
@@ -67,6 +67,8 @@ Built role-based dashboards (admin/doctor/patient), appointment booking, and pro
 
 ## Contact
 
+I'm looking for a full-time front-end role: remote, on-site in Egypt, or with relocation to the Gulf. I'm also open to freelance and contract work. Email is the fastest way to reach me, and I reply within 24 hours.
+
 - Email: [mahmoudmaherofficial@gmail.com](mailto:mahmoudmaherofficial@gmail.com)
 - [WhatsApp](https://wa.me/201093931501)
 - [LinkedIn](https://www.linkedin.com/in/mahmoudmaherofficial2/)
@@ -78,7 +80,7 @@ This repo is the source code of the site, and a public sample of how I write Typ
 
 - **Stack:** Next.js 16 (App Router), React 19, TypeScript (strict), Tailwind CSS v4, shadcn/ui on Base UI, Framer Motion, hosted on Vercel.
 - **Static, typed content:** everything on the page comes from typed files in [`src/content/`](src/content) and is prerendered at build time. There is no CMS, no API and no environment variables.
-- **Editor design system:** the page is styled as a code editor. Semantic tokens in `globals.css` (editor surfaces plus three muted syntax tints) feed a small server-rendered kit in [`src/components/ide/`](src/components/ide) (`EditorWindow`, `SectionHeading`, `Tok`, ...). Only the Explorer, status bar and copy button run on the client.
+- **Editor design system:** the page is styled as a code editor. Semantic tokens in `globals.css` (editor surfaces plus three muted syntax tints) feed a small server-rendered kit in [`src/components/ide/`](src/components/ide) (`EditorWindow`, `SectionHeading`, `Tok`, ...). Sections stay Server Components; client code lives in small leaf components (navigation, theme toggle, the project stack and gallery, motion wrappers, the live clock and the typing code card).
 - **Motion with care:** Framer Motion via `LazyMotion` and `m` components, reduced-motion support, no entrance animation on the LCP element, and content that stays readable without JavaScript.
 - **Quality:** accessible (keyboard navigation, focus states, contrast in both themes), SEO metadata with a dynamic OG image, and Lighthouse 90+ as the target.
 

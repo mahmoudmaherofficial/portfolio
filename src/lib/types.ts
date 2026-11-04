@@ -69,6 +69,8 @@ export type Site = {
   logo: string
   /** Every nav link, in page order. Only links to rendered sections are shown. */
   nav: NavItem[]
+  /** Page description for search results and link previews. */
+  metaDescription: string
   footerTagline: string
   /** Comment under the footer's repo link. */
   footerSourceNote: string

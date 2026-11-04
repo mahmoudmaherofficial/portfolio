@@ -2,7 +2,7 @@ import { profile } from "@/content/profile"
 import type { SkillGroup } from "@/lib/types"
 
 export const skillsIntro =
-  "The tools I use to build and ship production web apps."
+  "The stack behind the projects above. The ×n shows how many of them use each tool."
 
 export const skillGroups: SkillGroup[] = [
   {

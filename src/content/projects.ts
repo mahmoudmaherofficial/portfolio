@@ -1,7 +1,7 @@
 import type { Project } from "@/lib/types"
 
 export const projectsIntro =
-  "Selected client and personal work: dashboards, management systems and bilingual websites."
+  "Client work running in production, plus one personal project with public code."
 
 /**
  * A card renders only when it has a title, summary, tech list and at least one screenshot.
@@ -15,6 +15,8 @@ export const projects: Project[] = [
     role: "Sole Developer (full-stack)",
     summary:
       "Analytics platform for a UAE-based sports club, tracking 100+ athletes across multiple sports.",
+    challenge:
+      "The club tracked athletes in Excel and on paper. It needed one place to record their data and turn it into KPIs, with each role seeing only its own data.",
     whatIDid:
       "Built the full platform alone: athlete profiles, data entry, KPI dashboards with Recharts, PDF/Excel export, and role-based access so each role sees only its data.",
     tech: [
@@ -57,7 +59,7 @@ export const projects: Project[] = [
   },
   {
     slug: "metal-construction",
-    title: "Corporate Website — Metal Construction Company",
+    title: "Bilingual Website for Alarab Construction",
     type: "Client Project",
     role: "Front-End Developer",
     summary:
@@ -98,7 +100,7 @@ export const projects: Project[] = [
     title: "Activity Watcher",
     type: "Client Project",
     role: "Full-Stack Developer",
-    summary: "Team activity tracker used daily by a team of 25+ members.",
+    summary: "Activity tracker used daily by a 25+ person team.",
     challenge:
       "The team needed one place to log tasks and activity and give managers a clear view, running on their own server.",
     whatIDid:
@@ -146,9 +148,9 @@ export const projects: Project[] = [
   {
     slug: "alarab-erp",
     title: "Alarab ERP",
-    type: "Client Project (freelance)",
+    type: "Client Project",
     badge: "In development",
-    summary: "ERP system for Alarab, currently in development.",
+    summary: "ERP system for Alarab.",
     tech: ["GitHub Actions"],
     links: [],
     screenshots: [],

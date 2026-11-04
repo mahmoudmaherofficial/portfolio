@@ -15,6 +15,8 @@ export const site: Site = {
     },
     { id: "contact", label: "Contact", file: "contact.sh", kind: "sh" },
   ],
+  metaDescription:
+    "Front-end developer building dashboards and bilingual web apps with Next.js, React and TypeScript. Open to full-time roles: remote, in Egypt or in the Gulf.",
   footerTagline: "Front-End Developer · Next.js, React, TypeScript",
   footerSourceNote: "read the code behind this page",
 }

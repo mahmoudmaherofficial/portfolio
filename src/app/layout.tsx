@@ -14,7 +14,7 @@ const title = `${profile.name} - ${profile.title}`
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title,
-  description: profile.bio,
+  description: site.metaDescription,
   authors: [{ name: profile.name, url: site.url }],
   alternates: { canonical: "/" },
   openGraph: {
@@ -22,10 +22,14 @@ export const metadata: Metadata = {
     url: "/",
     siteName: profile.name,
     title,
-    description: profile.bio,
+    description: site.metaDescription,
     locale: "en_US",
   },
-  twitter: { card: "summary_large_image", title, description: profile.bio },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description: site.metaDescription,
+  },
 }
 
 export const viewport: Viewport = {
