@@ -5,6 +5,8 @@ export type Profile = {
   location: string
   timezone: string
   availability: string
+  /** Short availability for tight spaces, e.g. the mobile status bar. */
+  availabilityShort: string
   /** URL path of the resume PDF under `public/`, starting with "/". */
   resumePath: string
   /** Paragraphs of the About section. */
@@ -25,10 +27,17 @@ export type ExperienceEntry = {
   tech: string[]
 }
 
+/** File types used by the editor chrome (tabs, Explorer, status bar). */
+export type FileKind =
+  "md" | "dir" | "json" | "log" | "sh" | "tsx" | "ts" | "pdf"
+
 export type NavItem = {
   /** Id of the page section this link scrolls to. */
   id: string
   label: string
+  /** File name shown in the editor chrome, e.g. "about.md". */
+  file: string
+  kind: FileKind
 }
 
 export type Site = {

@@ -60,9 +60,12 @@ Personal portfolio for Mahmoud Maher, Front-End Developer.
 src/
 ├── app/                  # layout, page, metadata, opengraph-image, sitemap, robots
 ├── components/
+│   ├── ide/              # editor design-system kit: EditorWindow, SectionHeading, Tok, ...
+│   ├── layout/           # Header, Explorer, StatusBar, Footer
 │   ├── sections/         # Hero, About, Skills, Projects, Experience, Contact
 │   └── ui/               # shadcn/ui components
 ├── content/              # typed content: profile.ts, projects.ts, skills.ts, experience.ts
+├── hooks/                # client hooks (useThing.ts)
 └── lib/                  # utils, types, motion helpers
 public/                   # me.webp, favicon.png, resume PDF, projects/<slug>/
 ```
@@ -75,7 +78,9 @@ public/                   # me.webp, favicon.png, resume PDF, projects/<slug>/
 
 ## 4. Design Rules
 
-- **Direction:** dev / technical. Geist Mono for labels, tags, meta lines and section numbers; grid lines and subtle technical details; one accent color.
+- **Direction:** dev / technical, styled as a code editor (IDE accents): editor windows with file tabs, prompt-style section headings, line-number gutters. Geist Mono for labels, tags, meta lines and code-like text; grid lines and subtle technical details.
+- **Color:** one accent color (emerald, `--primary`) for interactive and active states. Three muted syntax tints (`--syntax-keyword`, `--syntax-string`, `--syntax-comment`) are allowed **only** in code-like text (prompts, file names, code cards, tags).
+- **Chrome:** the header is always visible; below `lg` it collapses to the file switcher + Explorer. A decorative, `aria-hidden` status bar is fixed to the bottom.
 - **Dark mode:** follows the system by default, with a manual toggle. Both themes must meet contrast requirements.
 - Header and footer use the same nav links.
 

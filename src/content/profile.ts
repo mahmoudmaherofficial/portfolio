@@ -7,6 +7,7 @@ export const profile: Profile = {
   location: "Menofia, Egypt",
   timezone: "Cairo time (EET)",
   availability: "Open to remote & relocation (Gulf)",
+  availabilityShort: "Open to work",
   resumePath: "/Mahmoud-Maher-Resume.pdf",
   about: [
     "I'm a front-end developer focused on Next.js, React and TypeScript. Since 2024 I've delivered 10+ projects for clients: admin dashboards, management systems, company websites and e-commerce stores, mostly replacing paper and Excel workflows with tools teams actually use every day.",
