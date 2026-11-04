@@ -3,6 +3,7 @@ import type { ContactContent } from "@/lib/types"
 export const contact: ContactContent = {
   heading: "Let's work together",
   intro: "Open to front-end roles, remote or on-site in the Gulf.",
+  replyTime: "within 24h",
   channels: [
     {
       kind: "email",
@@ -15,11 +16,13 @@ export const contact: ContactContent = {
       kind: "linkedin",
       label: "LinkedIn",
       href: "https://www.linkedin.com/in/mahmoudmaherofficial2/",
+      handle: "in/mahmoudmaherofficial2",
     },
     {
       kind: "github",
       label: "GitHub",
       href: "https://github.com/mahmoudmaherofficial",
+      handle: "@mahmoudmaherofficial",
     },
   ],
 }

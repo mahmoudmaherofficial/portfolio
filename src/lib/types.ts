@@ -109,13 +109,17 @@ export type Project = {
 export type ContactChannel = {
   /** Shown as the link text (e.g. the email address, or "WhatsApp"). */
   label: string
-  /** Name of the channel, used for the icon and screen readers. */
+  /** Name of the channel, shown as the key in the contact object. */
   kind: "email" | "whatsapp" | "linkedin" | "github"
   href: string
+  /** Public handle shown as the value, e.g. "in/name". Omit to hide it (WhatsApp shows no number). */
+  handle?: string
 }
 
 export type ContactContent = {
   heading: string
   intro: string
+  /** How fast messages get a reply, e.g. "within 24h". */
+  replyTime: string
   channels: ContactChannel[]
 }
