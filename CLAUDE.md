@@ -33,7 +33,7 @@ Personal portfolio for Mahmoud Maher, Front-End Developer.
 - No emojis in headings. Never use the word "junior".
 - Client names and logos stay hidden wherever the content says so. Screenshots must have client names/logos removed before they are added to the repo.
 - Never display the phone number. WhatsApp is a link only.
-- The site links to its own GitHub repo in the footer ("Source code") and in the About section.
+- The site links to its own GitHub repo in the footer ("Source code").
 
 ## 3. Stack and Conventions
 
