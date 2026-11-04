@@ -1,13 +1,10 @@
 import Image from "next/image"
-import { ArrowUpRight } from "lucide-react"
 
 import { EditorWindow } from "@/components/ide/EditorWindow"
 import { Gutter } from "@/components/ide/Gutter"
 import { SectionHeading } from "@/components/ide/SectionHeading"
 import { Reveal } from "@/components/motion/Reveal"
-import { buttonVariants } from "@/components/ui/button"
 import { profile } from "@/content/profile"
-import { cn } from "@/lib/utils"
 
 export function About() {
   const [lead, ...rest] = profile.about
@@ -81,19 +78,6 @@ export function About() {
                   {paragraph}
                 </p>
               ))}
-              <a
-                href={profile.repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(
-                  buttonVariants({ variant: "outline", size: "lg" }),
-                  "mt-8 h-11 w-full px-4 sm:w-auto"
-                )}
-              >
-                Source code
-                <ArrowUpRight aria-hidden="true" />
-                <span className="sr-only">(opens in a new tab)</span>
-              </a>
             </div>
           </EditorWindow>
         </Reveal>
