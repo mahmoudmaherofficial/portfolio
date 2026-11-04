@@ -3,6 +3,8 @@ import type { Profile } from "@/lib/types"
 export const profile: Profile = {
   name: "Mahmoud Maher",
   title: "Front-End Developer",
+  stack: ["Next.js", "React", "TypeScript"],
+  shipped: "10+ client projects",
   bio: "I build fast web apps with Next.js, React and TypeScript, from a client dashboard used daily by a 25+ person team to bilingual Arabic/English websites.",
   location: "Menofia, Egypt",
   timezone: "Cairo time (EET)",

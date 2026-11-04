@@ -5,13 +5,18 @@ export type CodeToken = { kind: CodeTokenKind; text: string }
 export type CodeLine = CodeToken[]
 
 /** Fields shown in the hero's code card, in source order. */
-const FIELDS = [
-  "name",
-  "title",
-  "location",
-  "timezone",
-  "availability",
-] as const
+const FIELDS = ["name", "title", "stack", "shipped", "availability"] as const
+
+/** A string value as a string token; an array as `["a", "b"]` with each item tinted. */
+function valueTokens(value: string | string[]): CodeToken[] {
+  if (!Array.isArray(value))
+    return [{ kind: "string", text: JSON.stringify(value) }]
+  const items = value.flatMap((item, i): CodeToken[] => [
+    ...(i > 0 ? [{ kind: "plain" as const, text: ", " }] : []),
+    { kind: "string", text: JSON.stringify(item) },
+  ])
+  return [{ kind: "plain", text: "[" }, ...items, { kind: "plain", text: "]" }]
+}
 
 /**
  * Renders the profile as syntax-tagged lines that mirror `src/content/profile.ts`,
@@ -30,7 +35,7 @@ export function profileCodeLines(profile: Profile): CodeLine[] {
     { kind: "plain", text: "  " },
     { kind: "key", text: key },
     { kind: "plain", text: ": " },
-    { kind: "string", text: JSON.stringify(profile[key]) },
+    ...valueTokens(profile[key]),
     { kind: "plain", text: "," },
   ])
   return [open, ...fields, [{ kind: "plain", text: "}" }]]
