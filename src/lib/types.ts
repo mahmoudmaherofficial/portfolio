@@ -76,3 +76,17 @@ export type Project = {
   links: { label: string; href: string }[]
   screenshots: Screenshot[]
 }
+
+export type ContactChannel = {
+  /** Shown as the link text (e.g. the email address, or "WhatsApp"). */
+  label: string
+  /** Name of the channel, used for the icon and screen readers. */
+  kind: "email" | "whatsapp" | "linkedin" | "github"
+  href: string
+}
+
+export type ContactContent = {
+  heading: string
+  intro: string
+  channels: ContactChannel[]
+}

@@ -45,24 +45,13 @@ Personal portfolio for Mahmoud Maher, Front-End Developer.
 - **Package manager:** npm.
 - **Content:** typed data in `src/content/*.ts`, read in Server Components. The page is statically generated. No runtime data fetching for content.
 
-### Contact form
+### Contact
 
-- Next.js route handler (`src/app/api/contact/route.ts`) + Resend.
-- Rate limiting with `@upstash/ratelimit` on Upstash Redis (free tier), plus a honeypot field.
-- Validate the request body with Zod on the server.
+- Links only (email, WhatsApp, LinkedIn, GitHub), from `src/content/contact.ts`. No contact form and no API routes.
 
 ### Environment variables
 
-All server-only. Never prefix secrets with `NEXT_PUBLIC_`.
-
-```
-RESEND_API_KEY=
-CONTACT_TO_EMAIL=
-UPSTASH_REDIS_REST_URL=
-UPSTASH_REDIS_REST_TOKEN=
-```
-
-- Keep `.env.example` up to date with every variable name (no values).
+- The site needs none. If one is ever added, keep it server-only (never prefix secrets with `NEXT_PUBLIC_`) and list its name in `.env.example`.
 - Never commit `.env`, `.env.local` or any `.env*.local` file. They must be in `.gitignore`.
 
 ### Folder structure
@@ -70,12 +59,11 @@ UPSTASH_REDIS_REST_TOKEN=
 ```
 src/
 ├── app/                  # layout, page, metadata, opengraph-image, sitemap, robots
-│   └── api/contact/      # route handler (Resend + Upstash)
 ├── components/
 │   ├── sections/         # Hero, About, Skills, Projects, Experience, Contact
 │   └── ui/               # shadcn/ui components
 ├── content/              # typed content: profile.ts, projects.ts, skills.ts, experience.ts
-└── lib/                  # utils, types, motion helpers, ratelimit
+└── lib/                  # utils, types, motion helpers
 public/                   # me.webp, favicon.png, resume PDF, projects/<slug>/
 ```
 
@@ -134,7 +122,7 @@ Rich, using Framer Motion, with these constraints:
 
 - No secrets, API keys or `.env*.local` files in the repo or its history.
 - No client screenshots that still show client names or logos.
-- A proper `README.md`: what the site is, stack, key decisions (static content, motion approach, contact form + rate limiting), how to run it locally, and the env vars needed.
+- A proper `README.md`: what the site is, stack, key decisions (static content, motion approach), and how to run it locally.
 - Clean, meaningful commit history (see Git below).
 
 ## 6. Workflow
