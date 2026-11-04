@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils"
 
-/** Decorative line-number column. */
 export function Gutter({
   lines,
   className,

@@ -5,13 +5,10 @@ import { SiteNav } from "@/components/layout/SiteNav"
 import { ThemeToggle } from "@/components/layout/ThemeToggle"
 import { profile } from "@/content/profile"
 import type { NavItem } from "@/lib/types"
-import { publicFileExists } from "@/lib/public-file"
+import { getResumeHref } from "@/lib/public-file"
 
-/** Always-visible editor chrome: file tabs on desktop, a file switcher below `lg`. */
 export function Header({ nav }: { nav: NavItem[] }) {
-  const resumeHref = publicFileExists(profile.resumePath)
-    ? profile.resumePath
-    : undefined
+  const resumeHref = getResumeHref()
 
   return (
     <header className="fixed inset-x-0 top-0 z-40 flex h-11 items-stretch justify-between border-b bg-surface-chrome">

@@ -4,7 +4,6 @@ import { FileIcon } from "@/components/ide/FileIcon"
 import { useActiveSection } from "@/hooks/useActiveSection"
 import type { NavItem } from "@/lib/types"
 
-/** Desktop navigation: one editor tab per section, the current one marked active. */
 export function SiteNav({ items }: { items: NavItem[] }) {
   const active = useActiveSection(items.map((item) => item.id))
 

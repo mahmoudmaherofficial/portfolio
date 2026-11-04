@@ -16,6 +16,7 @@ import { TechTag } from "@/components/TechTag"
 import { ProjectMeta } from "@/components/sections/ProjectInfo"
 import { ShotCarousel } from "@/components/sections/ShotCarousel"
 import type { ProjectView } from "@/lib/projects"
+import { FOCUS_RING } from "@/lib/utils"
 
 // The sheet (and its dialog code) is fetched the first time a project is opened.
 const loadSheet = () => import("@/components/sections/ProjectSheetDialog")
@@ -177,7 +178,7 @@ export function ProjectCompactCard({
           type="button"
           ref={(node) => sheet?.register(index, node)}
           onClick={() => sheet?.open(index)}
-          className="group/cta mt-1 ml-auto flex min-h-11 items-center gap-1 rounded-md font-mono text-xs text-primary outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          className={`group/cta mt-1 ml-auto flex min-h-11 items-center gap-1 rounded-md font-mono text-xs text-primary ${FOCUS_RING}`}
         >
           View project
           <span className="sr-only">: {project.title}</span>

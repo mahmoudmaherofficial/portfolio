@@ -10,7 +10,6 @@ const TOK_CLASS: Record<TokKind, string> = {
   plain: "text-muted-foreground",
 }
 
-/** A syntax-colored span of code-like text. */
 export function Tok({
   kind,
   className,

@@ -5,8 +5,7 @@ import { Logo } from "@/components/layout/Logo"
 import { profile } from "@/content/profile"
 import { site } from "@/content/site"
 import type { NavItem } from "@/lib/types"
-
-const FOCUS = "outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+import { FOCUS_RING } from "@/lib/utils"
 
 /** Repo path shown in the source link, e.g. "mahmoudmaherofficial/portfolio". */
 const repoPath = profile.repoUrl.replace(
@@ -36,7 +35,10 @@ export function Footer({ nav }: { nav: NavItem[] }) {
         </div>
 
         <nav aria-label="Footer">
-          <p aria-hidden="true" className="font-mono text-xs text-syntax-comment">
+          <p
+            aria-hidden="true"
+            className="font-mono text-xs text-syntax-comment"
+          >
             {"// files"}
           </p>
           {/* Phones: two columns of full-size tap targets. Wider: a single Explorer-like list. */}
@@ -45,7 +47,7 @@ export function Footer({ nav }: { nav: NavItem[] }) {
               <li key={item.id}>
                 <a
                   href={`#${item.id}`}
-                  className={`flex min-h-11 items-center gap-2.5 rounded-md font-mono text-[0.8125rem] text-muted-foreground transition-colors hover:text-foreground md:min-h-8 ${FOCUS}`}
+                  className={`flex min-h-11 items-center gap-2.5 rounded-md font-mono text-[0.8125rem] text-muted-foreground transition-colors hover:text-foreground md:min-h-8 ${FOCUS_RING}`}
                 >
                   <FileIcon kind={item.kind} className="w-4.5 shrink-0" />
                   {item.file}
@@ -56,14 +58,17 @@ export function Footer({ nav }: { nav: NavItem[] }) {
         </nav>
 
         <div>
-          <p aria-hidden="true" className="font-mono text-xs text-syntax-comment">
+          <p
+            aria-hidden="true"
+            className="font-mono text-xs text-syntax-comment"
+          >
             {"// source"}
           </p>
           <a
             href={profile.repoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`mt-2.5 flex min-h-13 items-center justify-between gap-3 rounded-lg border bg-surface-pane px-4 font-mono text-[0.8125rem] text-foreground transition-colors hover:border-primary/50 ${FOCUS}`}
+            className={`mt-2.5 flex min-h-13 items-center justify-between gap-3 rounded-lg border bg-surface-pane px-4 font-mono text-[0.8125rem] text-foreground transition-colors hover:border-primary/50 ${FOCUS_RING}`}
           >
             <span className="min-w-0 truncate">
               <span className="sr-only">Source code: </span>
@@ -103,7 +108,7 @@ export function Footer({ nav }: { nav: NavItem[] }) {
             </span>
             <a
               href="#hero"
-              className={`inline-flex min-h-11 items-center gap-1.5 rounded-lg border px-3 text-foreground transition-colors hover:border-primary/50 sm:min-h-8 ${FOCUS}`}
+              className={`inline-flex min-h-11 items-center gap-1.5 rounded-lg border px-3 text-foreground transition-colors hover:border-primary/50 sm:min-h-8 ${FOCUS_RING}`}
             >
               <ArrowUp aria-hidden="true" className="size-3.5 text-primary" />
               <span aria-hidden="true">cd ~</span>

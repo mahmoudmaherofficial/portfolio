@@ -3,7 +3,7 @@
 import { useEffect, useState, useSyncExternalStore } from "react"
 import { Check, Copy } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { cn, FOCUS_RING } from "@/lib/utils"
 
 const noop = () => () => {}
 
@@ -47,7 +47,8 @@ export function CopyButton({
           )
         }}
         className={cn(
-          "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border px-4 font-mono text-sm transition-colors outline-none hover:border-primary/50 focus-visible:ring-3 focus-visible:ring-ring/50",
+          "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border px-4 font-mono text-sm transition-colors hover:border-primary/50",
+          FOCUS_RING,
           copied && "border-primary/50 text-primary",
           className
         )}

@@ -12,7 +12,6 @@ const ICONS: Record<FileKind, { glyph: string; className: string }> = {
   pdf: { glyph: "↓", className: "text-primary" },
 }
 
-/** Decorative file-type glyph used in tabs, the Explorer and the status bar. */
 export function FileIcon({
   kind,
   className,

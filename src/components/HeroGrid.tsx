@@ -1,8 +1,10 @@
 "use client"
 
-import { useEffect, useState, useSyncExternalStore } from "react"
+import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 import { useTheme } from "next-themes"
+
+import { useMediaQuery } from "@/hooks/useMediaQuery"
 
 // Only fetched when the highlight layer renders, so touch devices never download it.
 const CursorGrid = dynamic(() => import("@/components/CursorGrid"), {
@@ -14,21 +16,6 @@ type GridColors = { primary: string; foreground: string }
 /** Only mouse/trackpad users without a reduced-motion preference get the highlight layer. */
 const SHOW_HIGHLIGHTS =
   "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)"
-
-function subscribeShowHighlights(onChange: () => void) {
-  const query = window.matchMedia(SHOW_HIGHLIGHTS)
-  query.addEventListener("change", onChange)
-  return () => query.removeEventListener("change", onChange)
-}
-
-/** False on the server so nothing extra renders before hydration. */
-function useShowHighlights(): boolean {
-  return useSyncExternalStore(
-    subscribeShowHighlights,
-    () => window.matchMedia(SHOW_HIGHLIGHTS).matches,
-    () => false
-  )
-}
 
 /** Resolves any CSS color (including oklch) to #rrggbb, which CursorGrid's WebGL shader needs. */
 function cssColorToHex(value: string): string {
@@ -51,7 +38,8 @@ function readThemeColors(): GridColors {
 /** Emerald cell highlights that follow the cursor, layered over the hero's static CSS grid. */
 export function HeroGrid() {
   const { resolvedTheme } = useTheme()
-  const showHighlights = useShowHighlights()
+  // False on the server so nothing extra renders before hydration.
+  const showHighlights = useMediaQuery(SHOW_HIGHLIGHTS, false)
   const [colors, setColors] = useState<GridColors | null>(null)
 
   useEffect(() => {
