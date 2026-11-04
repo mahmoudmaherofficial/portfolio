@@ -48,7 +48,7 @@ export const skillGroups: SkillGroup[] = [
     name: "Motion",
     skills: [{ name: "Framer Motion" }],
     proof: {
-      label: "Proof: this portfolio's public repo",
+      label: "proof: this portfolio's public repo",
       href: profile.repoUrl,
     },
   },
