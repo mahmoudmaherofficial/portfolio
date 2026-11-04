@@ -35,9 +35,9 @@ export function About() {
         <Reveal amount="some" className="mt-6 sm:mt-8">
           <EditorWindow
             tab={{ name: "about.md", kind: "md" }}
-            bodyClassName="grid gap-6 p-4 sm:p-6 lg:grid-cols-[minmax(0,20rem)_2.75rem_minmax(0,1fr)] lg:gap-0 lg:p-0"
+            bodyClassName="grid gap-6 p-4 sm:p-6 lg:grid-cols-[minmax(0,22rem)_2.75rem_minmax(0,1fr)] lg:gap-0 lg:p-0"
           >
-            <figure className="relative mx-auto w-full max-w-60 overflow-hidden rounded-lg border border-primary/20 bg-surface-chrome sm:max-w-xs lg:m-8 lg:max-w-none">
+            <figure className="relative mx-auto aspect-3/4 w-full max-w-60 self-start overflow-hidden rounded-lg border border-primary/20 bg-surface-chrome sm:max-w-xs lg:m-8 lg:w-auto lg:max-w-none">
               <div aria-hidden="true" className="absolute inset-0 hero-grid" />
               <div
                 aria-hidden="true"
@@ -48,8 +48,8 @@ export function About() {
                 width={profile.photo.width}
                 height={profile.photo.height}
                 alt={`Portrait of ${profile.name}`}
-                sizes="(min-width: 1024px) 20rem, 15rem"
-                className="relative h-auto w-full mask-[linear-gradient(to_bottom,black_70%,transparent)]"
+                sizes="(min-width: 1024px) 18rem, 20rem"
+                className="relative size-full mask-[linear-gradient(to_bottom,black_70%,transparent)] object-cover object-top"
               />
               {CORNERS.map((corner) => (
                 <span
