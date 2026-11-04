@@ -1,24 +1,11 @@
-import { ArrowUpRight, Mail, MessageCircle } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 
+import { CopyButton } from "@/components/CopyButton"
 import SpotlightCard from "@/components/SpotlightCard"
+import { EditorWindow } from "@/components/ide/EditorWindow"
+import { SectionHeading } from "@/components/ide/SectionHeading"
 import { Reveal } from "@/components/motion/Reveal"
 import { contact } from "@/content/contact"
-import type { ContactChannel } from "@/lib/types"
-
-/** lucide-react no longer ships brand logos, so LinkedIn and GitHub use small inline marks. */
-function ChannelIcon({ kind }: { kind: ContactChannel["kind"] }) {
-  if (kind === "email") return <Mail aria-hidden="true" className="size-4" />
-  if (kind === "whatsapp")
-    return <MessageCircle aria-hidden="true" className="size-4" />
-  return (
-    <span
-      aria-hidden="true"
-      className="flex size-4 items-center justify-center font-mono text-[0.625rem] leading-none font-semibold"
-    >
-      {kind === "linkedin" ? "in" : "gh"}
-    </span>
-  )
-}
 
 const focusRing = "outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
 
@@ -30,70 +17,81 @@ export function Contact() {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="relative border-t py-24 offscreen-section sm:py-32"
+      className="relative border-t py-16 offscreen-section sm:py-28"
     >
-      <div className="mx-auto flex w-full max-w-3xl flex-col items-center px-4 text-center sm:px-6">
+      <div className="mx-auto flex w-full max-w-3xl flex-col px-4 sm:items-center sm:px-6 sm:text-center">
         <Reveal>
-          <p
-            aria-hidden="true"
-            className="font-mono text-xs text-muted-foreground"
-          >
-            05 // contact
-          </p>
-          <h2
+          <SectionHeading
             id="contact-heading"
-            className="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl"
+            command="./contact.sh"
+            className="sm:[&>div]:justify-center"
+            headingClassName="sm:text-5xl"
           >
             {contact.heading}
-          </h2>
+          </SectionHeading>
           <p className="mt-4 text-base text-muted-foreground sm:text-lg">
             {contact.intro}
           </p>
         </Reveal>
 
-        {email && (
-          <Reveal delay={0.1} className="mt-10 w-full">
-            <SpotlightCard intensity={0.08}>
-              <a
-                href={email.href}
-                className={`group/email flex min-h-16 items-center justify-center gap-2 rounded-xl border border-border px-4 py-5 font-mono text-xs transition-colors hover:border-primary/60 min-[400px]:text-sm sm:gap-3 sm:text-xl ${focusRing}`}
-              >
-                <ChannelIcon kind="email" />
-                {/* <wbr> lets very narrow screens wrap at the "@" instead of mid-word. */}
-                <span className="min-w-0 break-words">
-                  {email.label.split("@")[0]}
-                  <wbr />@{email.label.split("@")[1]}
-                </span>
-                <ArrowUpRight
-                  aria-hidden="true"
-                  className="size-4 shrink-0 text-primary transition-transform group-hover/email:translate-x-0.5 group-hover/email:-translate-y-0.5 motion-reduce:transition-none"
-                />
-              </a>
-            </SpotlightCard>
-          </Reveal>
-        )}
+        <Reveal delay={0.1} className="mt-6 w-full text-left sm:mt-10">
+          <SpotlightCard intensity={0.08} className="bg-surface-pane">
+            <EditorWindow
+              tab={{ name: "contact.sh", kind: "sh" }}
+              className="rounded-none border-0 bg-transparent"
+              bodyClassName="bg-background/60 p-4 font-mono sm:p-8"
+            >
+              <p aria-hidden="true" className="text-xs text-syntax-comment">
+                <span className="text-syntax-keyword">$</span> ./contact.sh
+              </p>
 
-        <Reveal delay={0.15} className="mt-6">
-          <ul className="flex flex-wrap justify-center gap-3">
-            {others.map((channel) => (
-              <li key={channel.kind}>
-                <a
-                  href={channel.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`group/link flex min-h-11 items-center gap-2 rounded-full border border-border px-4 font-mono text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground ${focusRing}`}
-                >
-                  <ChannelIcon kind={channel.kind} />
-                  {channel.label}
-                  <ArrowUpRight
-                    aria-hidden="true"
-                    className="size-3.5 opacity-60 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 motion-reduce:transition-none"
-                  />
-                  <span className="sr-only">(opens in a new tab)</span>
-                </a>
-              </li>
-            ))}
-          </ul>
+              {email && (
+                <div className="mt-4 flex flex-col gap-2 sm:mt-5 sm:flex-row sm:items-stretch">
+                  <a
+                    href={email.href}
+                    className={`group/email flex min-h-16 flex-1 items-center justify-between gap-3 rounded-lg border border-primary/35 bg-primary/6 px-4 py-4 text-base transition-colors hover:border-primary/70 sm:px-5 sm:text-xl ${focusRing}`}
+                  >
+                    {/* <wbr> lets very narrow screens wrap at the "@" instead of mid-word. */}
+                    <span className="min-w-0 break-words">
+                      {email.label.split("@")[0]}
+                      <wbr />@{email.label.split("@")[1]}
+                    </span>
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="size-4 shrink-0 text-primary transition-transform group-hover/email:translate-x-0.5 group-hover/email:-translate-y-0.5 motion-reduce:transition-none"
+                    />
+                  </a>
+                  <CopyButton value={email.label} className="sm:min-h-16" />
+                </div>
+              )}
+
+              <ul className="mt-3 grid grid-cols-2 gap-2 sm:mt-4 sm:flex sm:flex-wrap sm:gap-2.5">
+                {others.map((channel, i) => (
+                  <li
+                    key={channel.kind}
+                    className={
+                      i === others.length - 1 && others.length % 2 === 1
+                        ? "col-span-2"
+                        : undefined
+                    }
+                  >
+                    <a
+                      href={channel.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`flex min-h-11 items-center gap-2 rounded-lg border px-3 text-[0.8125rem] text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground sm:px-4 ${focusRing}`}
+                    >
+                      <span aria-hidden="true" className="text-primary">
+                        →
+                      </span>
+                      open {channel.kind}
+                      <span className="sr-only">(opens in a new tab)</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </EditorWindow>
+          </SpotlightCard>
         </Reveal>
       </div>
     </section>
