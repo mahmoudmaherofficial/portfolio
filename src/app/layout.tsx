@@ -71,7 +71,7 @@ export default function RootLayout({
           />
         </noscript>
       </head>
-      <body>
+      <body className="pt-11">
         <ThemeProvider>
           <MotionProvider>{children}</MotionProvider>
         </ThemeProvider>
