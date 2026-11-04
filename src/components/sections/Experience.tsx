@@ -3,30 +3,22 @@ import { TechTag } from "@/components/TechTag"
 import { Reveal } from "@/components/motion/Reveal"
 import { experience, experienceIntro } from "@/content/experience"
 import { cn } from "@/lib/utils"
+import { SectionHeading } from "@/components/ide/SectionHeading"
 
 export function Experience() {
   return (
     <section
       id="experience"
       aria-labelledby="experience-heading"
-      className="relative border-t py-24 offscreen-section sm:py-32"
+      className="relative border-t py-16 offscreen-section sm:py-28"
     >
       <div className="mx-auto grid w-full max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] lg:gap-16">
         {/* Heading stays in view while the timeline scrolls past on wide screens. */}
         <div className="lg:sticky lg:top-24 lg:self-start">
           <Reveal>
-            <p
-              aria-hidden="true"
-              className="font-mono text-xs text-muted-foreground"
-            >
-              04 // experience
-            </p>
-            <h2
-              id="experience-heading"
-              className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl"
-            >
+            <SectionHeading id="experience-heading" command="git log">
               Experience
-            </h2>
+            </SectionHeading>
             <p className="mt-4 max-w-[65ch] text-base text-muted-foreground sm:text-lg">
               {experienceIntro}
             </p>
@@ -36,6 +28,8 @@ export function Experience() {
         <ol>
           {experience.map((entry, i) => {
             const isLast = i === experience.length - 1
+            // The current role is the branch tip, like HEAD in `git log`.
+            const isHead = entry.period.includes("Present")
 
             return (
               <li
@@ -49,18 +43,37 @@ export function Experience() {
 
                 <div
                   className={cn(
-                    "relative border-l border-border pl-6 sm:pl-8",
+                    "relative border-l-2 pl-6 sm:pl-8",
+                    isHead ? "border-primary" : "border-border",
                     !isLast && "pb-8"
                   )}
                 >
                   <span
                     aria-hidden="true"
-                    className="absolute top-7 left-0 size-2.5 -translate-x-[calc(50%+0.5px)] translate-y-[5px] rounded-full border border-primary bg-background ring-4 ring-background"
+                    className={cn(
+                      "absolute top-7 left-0 -translate-x-[calc(50%+1px)] translate-y-[3px] rounded-full ring-4 ring-background",
+                      isHead
+                        ? "size-3.5 bg-primary"
+                        : "size-3 border-2 border-primary bg-background"
+                    )}
                   />
                   <Reveal delay={i * 0.1}>
-                    <SpotlightCard className="p-6 sm:p-8" intensity={0.12}>
-                      <p className="mb-2 font-mono text-xs text-primary sm:hidden">
-                        {entry.period}
+                    <SpotlightCard
+                      className="bg-surface-pane p-5 sm:p-8"
+                      intensity={0.12}
+                    >
+                      <p
+                        className={cn(
+                          "mb-2.5 flex-wrap items-center gap-2 font-mono text-xs text-primary",
+                          isHead ? "flex" : "flex sm:hidden"
+                        )}
+                      >
+                        {isHead && (
+                          <span className="rounded-full border border-primary/35 bg-primary/12 px-2 text-[0.6875rem]">
+                            HEAD
+                          </span>
+                        )}
+                        <span className="sm:hidden">{entry.period}</span>
                       </p>
                       <h3 className="text-lg font-semibold tracking-tight sm:text-xl">
                         {entry.role}
@@ -80,7 +93,7 @@ export function Experience() {
                       >
                         {entry.tech.map((tech) => (
                           <li key={tech}>
-                            <TechTag name={tech} />
+                            <TechTag name={tech} variant="string" />
                           </li>
                         ))}
                       </ul>
