@@ -2,6 +2,7 @@ import { ImageResponse } from "next/og"
 
 import { profile } from "@/content/profile"
 import { site } from "@/content/site"
+import { loadGoogleFont } from "@/lib/google-font"
 
 export const alt = `${profile.name} - ${profile.title}`
 export const size = { width: 1200, height: 630 }
@@ -17,22 +18,6 @@ const colors = {
   muted: "#a1a1a1",
   accent: "#00d492",
   grid: "rgba(255, 255, 255, 0.06)",
-}
-
-/**
- * next/og only bundles Geist Regular. Fetch the other weights from Google Fonts,
- * subset to the text used. The image is static, so this runs once at build time.
- */
-async function loadGoogleFont(family: string, weight: number, text: string) {
-  const query = `family=${family}:wght@${weight}&text=${encodeURIComponent(text)}`
-  const css = await (
-    await fetch(`https://fonts.googleapis.com/css2?${query}`)
-  ).text()
-  const url = css.match(
-    /src: url\((.+?)\) format\('(?:opentype|truetype)'\)/
-  )?.[1]
-  if (!url) throw new Error(`Could not load font: ${family} ${weight}`)
-  return (await fetch(url)).arrayBuffer()
 }
 
 export default async function OpengraphImage() {
