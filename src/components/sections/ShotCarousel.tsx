@@ -12,9 +12,7 @@ import useEmblaCarousel from "embla-carousel-react"
 import { Expand, Pause, Play } from "lucide-react"
 
 import { isPlaceholder, type Shot } from "@/lib/projects"
-import { cn } from "@/lib/utils"
-
-const pad = (n: number) => String(n).padStart(2, "0")
+import { cn, pad } from "@/lib/utils"
 
 function shotLabel(shot: Shot, index: number, total: number) {
   const position = `Screenshot ${index + 1} of ${total}`

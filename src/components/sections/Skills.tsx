@@ -4,15 +4,10 @@ import SpotlightCard from "@/components/SpotlightCard"
 import { TechTag } from "@/components/TechTag"
 import { Reveal } from "@/components/motion/Reveal"
 import { skillGroups, skillsIntro } from "@/content/skills"
-import { cn } from "@/lib/utils"
+import { cn, pad } from "@/lib/utils"
 
-/**
- * Bento spans by group order: Front-End wide beside Backend, then Tooling beside a wide Motion card.
- * Groups past the fourth fall back to a single cell.
- */
+/** Bento spans by group order. Groups past the fourth take a single cell. */
 const SPANS = ["md:col-span-2", "", "", "md:col-span-2 lg:col-span-2"]
-
-const pad = (n: number) => String(n).padStart(2, "0")
 
 export function Skills() {
   return (

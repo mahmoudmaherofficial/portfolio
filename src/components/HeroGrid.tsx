@@ -61,24 +61,13 @@ export function HeroGrid() {
     return () => cancelAnimationFrame(frame)
   }, [resolvedTheme])
 
-  // Touch devices and reduced motion keep only the hero's static CSS grid.
   if (!showHighlights || !colors) return null
 
   return (
-    <div aria-hidden="true" className="absolute inset-0 -z-10">
-      <CursorGrid
-        className="absolute inset-0"
-        cellSize={60}
-        color={colors.primary}
-        gridColor={colors.foreground}
-        gridOpacity={0}
-        fillOpacity={0.03}
-        maxOpacity={0.2}
-        spotlight={0.4}
-        intro={true}
-        radius={90}
-        lightMode={resolvedTheme === "light"}
-      />
-    </div>
+    <CursorGrid
+      className="absolute inset-0 -z-10 overflow-hidden"
+      color={colors.primary}
+      gridColor={colors.foreground}
+    />
   )
 }

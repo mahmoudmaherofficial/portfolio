@@ -1,16 +1,18 @@
-import { ArrowUpRight } from "lucide-react"
-
 import ScrollStack, { ScrollStackItem } from "@/components/ScrollStack"
 import SpotlightCard from "@/components/SpotlightCard"
 import { StackProgress } from "@/components/StackProgress"
-import { TechTag } from "@/components/TechTag"
 import { Reveal } from "@/components/motion/Reveal"
 import { ProjectGallery } from "@/components/sections/ProjectGallery"
+import {
+  ProjectDetails,
+  ProjectLinks,
+  ProjectMeta,
+  ProjectTech,
+} from "@/components/sections/ProjectInfo"
 import {
   ProjectCompactCard,
   ProjectSheetProvider,
 } from "@/components/sections/ProjectSheet"
-import { buttonVariants } from "@/components/ui/button"
 import { projectsIntro } from "@/content/projects"
 import { getVisibleProjects } from "@/lib/projects"
 
@@ -48,7 +50,6 @@ export function Projects() {
                 Projects
               </h2>
               <StackProgress
-                stackId="projects"
                 label="Jump to a project"
                 labels={projects.map((project) => project.title)}
               />
@@ -69,125 +70,53 @@ export function Projects() {
         <ProjectSheetProvider projects={projects}>
           <ScrollStack
             className="mt-12"
-            id="projects"
-            // Never pin under the fixed site header (h-14), nor under the
-            // section header while it is pinned (phones and tablets).
+            // Below the fixed site header (h-14), and below the section header while it is pinned.
             stackPosition={56}
             headerId="projects-head"
           >
-            {projects.map((project, index) => {
-              const meta = [project.type, project.role, project.date].filter(
-                Boolean
-              )
-              const details = (project.challenge || project.whatIDid) && (
-                <dl className="space-y-4 text-sm leading-relaxed">
-                  {project.challenge && (
-                    <div>
-                      <dt className="font-mono text-xs text-primary">
-                        Challenge
-                      </dt>
-                      <dd className="mt-1 text-muted-foreground">
-                        {project.challenge}
-                      </dd>
-                    </div>
-                  )}
-                  {project.whatIDid && (
-                    <div>
-                      <dt className="font-mono text-xs text-primary">
-                        What I did
-                      </dt>
-                      <dd className="mt-1 text-muted-foreground">
-                        {project.whatIDid}
-                      </dd>
-                    </div>
-                  )}
-                </dl>
-              )
-
-              return (
-                <ScrollStackItem
-                  key={project.slug}
-                  className="shadow-[0_-16px_40px_-24px_rgb(0_0_0/0.5)]"
-                >
-                  <div className="lg:hidden">
-                    <SpotlightCard intensity={0.08}>
-                      <ProjectCompactCard project={project} index={index} />
-                    </SpotlightCard>
-                  </div>
-
-                  <SpotlightCard
-                    intensity={0.08}
-                    className="hidden grid-cols-[minmax(0,1fr)_minmax(0,30rem)] gap-10 p-8 lg:grid"
-                  >
-                    <article
-                      aria-labelledby={`${project.slug}-title`}
-                      className="flex flex-col"
-                    >
-                      <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs text-muted-foreground">
-                        {meta.join(" · ")}
-                        {project.badge && (
-                          <span className="rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-primary">
-                            {project.badge}
-                          </span>
-                        )}
-                      </p>
-                      <h3
-                        id={`${project.slug}-title`}
-                        className="mt-3 text-2xl font-semibold tracking-tight"
-                      >
-                        {project.title}
-                      </h3>
-                      <p className="mt-3 leading-relaxed text-foreground/90">
-                        {project.summary}
-                      </p>
-
-                      {details && <div className="mt-6">{details}</div>}
-
-                      <ul
-                        aria-label="Tech used"
-                        className="mt-6 flex flex-wrap gap-2"
-                      >
-                        {project.tech.map((tech) => (
-                          <li key={tech}>
-                            <TechTag name={tech} />
-                          </li>
-                        ))}
-                      </ul>
-
-                      {project.links.length > 0 && (
-                        <div className="mt-auto flex flex-wrap gap-3 pt-6">
-                          {project.links.map((link) => (
-                            <a
-                              key={link.href}
-                              href={link.href}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className={buttonVariants({
-                                variant: "outline",
-                                size: "lg",
-                              })}
-                            >
-                              {link.label}
-                              <ArrowUpRight aria-hidden="true" />
-                              <span className="sr-only">
-                                (opens in a new tab)
-                              </span>
-                            </a>
-                          ))}
-                        </div>
-                      )}
-                    </article>
-
-                    <div>
-                      <ProjectGallery
-                        title={project.title}
-                        shots={project.shots}
-                      />
-                    </div>
+            {projects.map((project, index) => (
+              <ScrollStackItem
+                key={project.slug}
+                className="shadow-[0_-16px_40px_-24px_rgb(0_0_0/0.5)]"
+              >
+                <div className="lg:hidden">
+                  <SpotlightCard intensity={0.08}>
+                    <ProjectCompactCard project={project} index={index} />
                   </SpotlightCard>
-                </ScrollStackItem>
-              )
-            })}
+                </div>
+
+                <SpotlightCard
+                  intensity={0.08}
+                  className="hidden grid-cols-[minmax(0,1fr)_minmax(0,30rem)] gap-10 p-8 lg:grid"
+                >
+                  <article
+                    aria-labelledby={`${project.slug}-title`}
+                    className="flex flex-col"
+                  >
+                    <ProjectMeta project={project} />
+                    <h3
+                      id={`${project.slug}-title`}
+                      className="mt-3 text-2xl font-semibold tracking-tight"
+                    >
+                      {project.title}
+                    </h3>
+                    <p className="mt-3 leading-relaxed text-foreground/90">
+                      {project.summary}
+                    </p>
+                    <ProjectDetails project={project} className="mt-6" />
+                    <ProjectTech project={project} />
+                    <ProjectLinks project={project} className="mt-auto pt-6" />
+                  </article>
+
+                  <div>
+                    <ProjectGallery
+                      title={project.title}
+                      shots={project.shots}
+                    />
+                  </div>
+                </SpotlightCard>
+              </ScrollStackItem>
+            ))}
           </ScrollStack>
         </ProjectSheetProvider>
       </div>
