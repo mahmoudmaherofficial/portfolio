@@ -1,88 +1,91 @@
-# Mahmoud Maher - Portfolio
+# Mahmoud Maher - Front-End Developer
 
-Source code for [mahmoudmaher.site](https://mahmoudmaher.site), my portfolio as a Front-End Developer. It is a single, statically generated page: hero, about, projects, skills, experience and contact.
+I build fast web apps with Next.js, React and TypeScript, from a client dashboard used daily by a 25+ person team to bilingual Arabic/English websites.
 
-![Hero section of mahmoudmaher.site in dark mode](.github/images/hero.png)
+**[Live site](https://mahmoudmaher.site)** · **[Resume (PDF)](https://mahmoudmaher.site/Mahmoud-Maher-Resume.pdf)** · **[LinkedIn](https://www.linkedin.com/in/mahmoudmaherofficial2/)** · **[Email](mailto:mahmoudmaherofficial@gmail.com)**
 
-## Stack
+Menofia, Egypt · Cairo time (EET) · Open to remote & relocation (Gulf)
 
-- [Next.js 16](https://nextjs.org) (App Router) and React 19
-- TypeScript (`strict: true`)
-- [Tailwind CSS v4](https://tailwindcss.com) and [shadcn/ui](https://ui.shadcn.com) on [Base UI](https://base-ui.com)
-- [Framer Motion](https://motion.dev) for animation
-- [Embla Carousel](https://www.embla-carousel.com) for the project screenshot galleries
-- `next-themes` for light/dark mode, Geist Sans and Geist Mono via `next/font`
-- Hosted on Vercel
+![Hero section of mahmoudmaher.site](.github/images/hero.png)
 
-## Key decisions
+## About
 
-### Static, typed content
+I'm a front-end developer focused on Next.js, React and TypeScript. Since 2024 I've delivered 10+ projects for clients: admin dashboards, management systems, company websites and e-commerce stores, mostly replacing paper and Excel workflows with tools teams actually use every day.
 
-All content lives in typed TypeScript files in [`src/content/`](src/content) (`profile.ts`, `projects.ts`, `skills.ts`, `experience.ts`, `contact.ts`, `site.ts`) and is read in Server Components. There is no CMS and no runtime data fetching, so the whole page is prerendered at build time.
+I started with a front-end internship at NTG Clarity, building role-based dashboards for a hospital management system. Since then I've owned projects end to end, so I'm comfortable working with the backend and deployment side when a project needs it (NestJS, Express, MongoDB, MySQL, Docker).
 
-The content files also decide what renders:
+What I care about: clean, typed code, interfaces that are fast and easy to use, and shipping on time.
 
-- A project card only renders once it has at least one real screenshot. Dev and Vercel preview builds show labelled placeholders instead, so the layout can be reviewed; production never does.
-- The "Download Resume" button only renders when the PDF exists in `public/`, checked at build time.
+## Selected work
 
-### Motion
+### Sports Performance Analytics Platform
 
-- Framer Motion is loaded through `LazyMotion` with `domAnimation` and the lighter `m` components, and `MotionConfig reducedMotion="user"` respects the visitor's reduced-motion setting.
-- Sections stay Server Components. Animation lives in small client components ([`src/components/motion/`](src/components/motion)).
-- The hero name and title, the LCP element, render without an entrance animation. Below-the-fold content fades in on scroll with `whileInView`.
-- Content stays readable without JavaScript: every animated wrapper has a `data-motion` attribute, and a `<noscript>` style in the root layout resets the server-rendered `opacity: 0`.
+_Client Project · Sole Developer (full-stack)_
 
-### Components
+Analytics platform for a UAE-based sports club, tracking 100+ athletes across multiple sports. Built the full platform alone: athlete profiles, data entry, KPI dashboards with Recharts, PDF/Excel export, and role-based access so each role sees only its data.
 
-UI pieces start from the [ReactBits](https://reactbits.dev) registry where something fits, then get adapted to the theme tokens, motion rules and accessibility requirements:
+`Next.js` `TypeScript` `Tailwind CSS` `shadcn/ui` `NestJS` `Prisma` `MySQL` `Recharts`
 
-- `SpotlightCard`: the cards in Experience, Skills, Projects and Contact
-- `CursorGrid`: the interactive grid behind the hero, rendered only for fine pointers without reduced motion
-- `ScrollStack`: the stacked project cards, rewritten to use normal window scroll (no scroll hijacking)
+### Activity Watcher
 
-### Contact
+_Client Project · Full-Stack Developer_
 
-Contact is links only (email, WhatsApp, LinkedIn, GitHub). There is no form or API route, so the site has no server code and needs no environment variables.
+Team activity tracker used daily by a team of 25+ members. Built secure auth with JWT access/refresh tokens in HTTP-only cookies and role-based access (Admin/Member), dashboards with charts, and search, filters and pagination. Deployed with Docker on the client's server.
 
-### SEO
+`Next.js` `TypeScript` `TanStack Query` `React Hook Form` `Zod` `Recharts` `Node.js` `Express.js` `MongoDB` `Docker`
 
-Page metadata, a dynamic Open Graph image generated with `next/og` ([`src/app/opengraph-image.tsx`](src/app/opengraph-image.tsx)), `sitemap.ts` and `robots.ts`.
+### Corporate Website — Metal Construction Company
 
-## Running locally
+_Client Project · Front-End Developer_
 
-Requires Node.js 20.9 or later.
+Bilingual company website presenting the company's services and projects. Built a fully bilingual Arabic/English site with RTL support, SEO setup, and handled deployment and launch.
+
+`Next.js` `Tailwind CSS` `i18n / RTL` `SEO`
+
+### LuxeLane
+
+_Personal Project · Full-Stack Developer · [GitHub](https://github.com/mahmoudmaherofficial/luxelane-frontend)_
+
+Full-stack e-commerce store with a searchable product catalog and user accounts. Built the Next.js front end and a REST API with Express.js and MongoDB, including authentication, role-based authorization, and search, filter, sort and pagination.
+
+`Next.js` `Tailwind CSS` `Node.js` `Express.js` `MongoDB` `Vercel`
+
+## Experience
+
+**Freelance Front-End Developer** · Oct 2024 – Present
+10+ client projects: dashboards, management systems, company websites and e-commerce stores.
+
+**Front-End Intern, NTG Clarity** · Jul 2024 – Sep 2024
+Built role-based dashboards (admin/doctor/patient), appointment booking, and protected routes for a hospital management system in a team of 4, using React and a REST API.
+
+## Skills
+
+- **Front-End:** React, Next.js (App Router, SSR/SSG), TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS, shadcn/ui, TanStack Query, React Hook Form, Zod, Recharts
+- **Backend:** Node.js, Express.js, NestJS, MongoDB, MySQL, Prisma, REST APIs, JWT auth
+- **Tooling:** Git, GitHub Actions, Docker, Vercel
+- **Motion:** Framer Motion (used in this repo)
+
+## Contact
+
+- Email: [mahmoudmaherofficial@gmail.com](mailto:mahmoudmaherofficial@gmail.com)
+- [WhatsApp](https://wa.me/201093931501)
+- [LinkedIn](https://www.linkedin.com/in/mahmoudmaherofficial2/)
+- [GitHub](https://github.com/mahmoudmaherofficial)
+
+## About this repo
+
+This repo is the source code of the site, and a public sample of how I write TypeScript.
+
+- **Stack:** Next.js 16 (App Router), React 19, TypeScript (strict), Tailwind CSS v4, shadcn/ui on Base UI, Framer Motion, hosted on Vercel.
+- **Static, typed content:** everything on the page comes from typed files in [`src/content/`](src/content) and is prerendered at build time. There is no CMS, no API and no environment variables.
+- **Motion with care:** Framer Motion via `LazyMotion` and `m` components, reduced-motion support, no entrance animation on the LCP element, and content that stays readable without JavaScript.
+- **Quality:** accessible (keyboard navigation, focus states, contrast in both themes), SEO metadata with a dynamic OG image, and Lighthouse 90+ as the target.
+
+Run it locally (Node.js 20.9+):
 
 ```bash
 git clone https://github.com/mahmoudmaherofficial/portfolio.git
 cd portfolio
 npm install
 npm run dev
-```
-
-Then open [http://localhost:3000](http://localhost:3000). No environment variables are needed.
-
-## Scripts
-
-| Script              | What it does                      |
-| ------------------- | --------------------------------- |
-| `npm run dev`       | Start the dev server              |
-| `npm run build`     | Production build                  |
-| `npm run start`     | Serve the production build        |
-| `npm run lint`      | ESLint                            |
-| `npm run typecheck` | TypeScript check (`tsc --noEmit`) |
-| `npm run format`    | Prettier                          |
-
-## Project structure
-
-```
-src/
-├── app/            # layout, page, OG image, sitemap, robots
-├── components/
-│   ├── sections/   # Hero, About, Projects, Skills, Experience, Contact
-│   ├── layout/     # Header, Footer
-│   ├── motion/     # Framer Motion client components
-│   └── ui/         # shadcn/ui components
-├── content/        # typed site content
-└── lib/            # types and helpers
-public/             # photo and resume PDF
 ```
