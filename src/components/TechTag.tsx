@@ -1,6 +1,6 @@
 import { ArrowUpRight } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { cn, FOCUS_RING } from "@/lib/utils"
 
 const TAG =
   "inline-flex items-center gap-1 rounded-md border border-border px-2 py-0.5 font-mono text-xs whitespace-nowrap"
@@ -60,7 +60,8 @@ export function TechTag({
       rel="noopener noreferrer"
       className={cn(
         className,
-        "transition-colors outline-none hover:border-primary/60 hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+        "transition-colors hover:border-primary/60 hover:text-foreground",
+        FOCUS_RING
       )}
     >
       {label}

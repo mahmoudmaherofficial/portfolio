@@ -1,18 +1,13 @@
 "use client"
 
-import {
-  useEffect,
-  useRef,
-  useState,
-  useSyncExternalStore,
-  type RefObject,
-} from "react"
+import { useEffect, useRef, useState, type RefObject } from "react"
 import Image from "next/image"
 import useEmblaCarousel from "embla-carousel-react"
 import { Expand, Pause, Play } from "lucide-react"
 
+import { useMediaQuery } from "@/hooks/useMediaQuery"
 import { isPlaceholder, type Shot } from "@/lib/projects"
-import { cn, pad } from "@/lib/utils"
+import { cn, FOCUS_RING, pad } from "@/lib/utils"
 
 function shotLabel(shot: Shot, index: number, total: number) {
   const position = `Screenshot ${index + 1} of ${total}`
@@ -59,23 +54,6 @@ export function ShotView({
 
 /** Time each screenshot stays up while the gallery plays on its own. */
 const AUTOPLAY_DELAY = 3000
-
-const REDUCE_QUERY = "(prefers-reduced-motion: reduce)"
-
-function subscribeReduce(onChange: () => void) {
-  const query = window.matchMedia(REDUCE_QUERY)
-  query.addEventListener("change", onChange)
-  return () => query.removeEventListener("change", onChange)
-}
-
-/** True on the server, so nothing auto-plays (or shows its pause button) before hydration. */
-function usePrefersReducedMotion(): boolean {
-  return useSyncExternalStore(
-    subscribeReduce,
-    () => window.matchMedia(REDUCE_QUERY).matches,
-    () => true
-  )
-}
 
 /** True once the element comes within a screen of the viewport. Stays true after that. */
 function useNearViewport(ref: RefObject<HTMLElement | null>): boolean {
@@ -136,7 +114,6 @@ export function ShotCarousel({
 }) {
   const rootRef = useRef<HTMLDivElement | null>(null)
   const near = useNearViewport(rootRef)
-  // Always loop 1 → 2 → 3 → 4 → 1, whether swiped, dragged or playing on its own.
   // Embla stays inactive (no measuring) until the carousel is near the viewport; carousels hidden
   // by a breakpoint never get there, so they never initialise.
   const [viewportRef, api] = useEmblaCarousel({
@@ -147,7 +124,8 @@ export function ShotCarousel({
   const [selected, setSelected] = useState(startIndex)
   const total = shots.length
 
-  const reduce = usePrefersReducedMotion()
+  // True on the server, so nothing auto-plays (or shows its pause button) before hydration.
+  const reduce = useMediaQuery("(prefers-reduced-motion: reduce)", true)
   const [playing, setPlaying] = useState(true)
   const canPlay = autoplay && !reduce && total > 1
   const active = canPlay && playing
@@ -234,18 +212,13 @@ export function ShotCarousel({
       aria-label={`${title} screenshots`}
       tabIndex={0}
       onKeyDown={(event) => {
-        if (event.key === "ArrowRight") {
-          event.preventDefault()
-          nudge()
-          api?.scrollNext()
-        }
-        if (event.key === "ArrowLeft") {
-          event.preventDefault()
-          nudge()
-          api?.scrollPrev()
-        }
+        if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return
+        event.preventDefault()
+        nudge()
+        if (event.key === "ArrowRight") api?.scrollNext()
+        else api?.scrollPrev()
       }}
-      className="rounded-lg outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+      className={`rounded-lg ${FOCUS_RING}`}
     >
       {/* One shared "open" hint per carousel instead of one per slide keeps the DOM small. */}
       <div className="group/viewport relative">
@@ -329,7 +302,7 @@ export function ShotCarousel({
                 type="button"
                 onClick={() => setPlaying((value) => !value)}
                 aria-label={playing ? "Pause screenshots" : "Play screenshots"}
-                className="flex size-6 items-center justify-center rounded-md text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+                className={`flex size-6 items-center justify-center rounded-md text-muted-foreground hover:text-foreground ${FOCUS_RING}`}
               >
                 {playing ? (
                   <Pause aria-hidden="true" className="size-3.5" />

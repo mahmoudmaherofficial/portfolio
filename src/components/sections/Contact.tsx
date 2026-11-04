@@ -8,7 +8,7 @@ import { Reveal } from "@/components/motion/Reveal"
 import { CairoClock } from "@/components/sections/CairoClock"
 import { contact } from "@/content/contact"
 import { profile } from "@/content/profile"
-import { publicFileExists } from "@/lib/public-file"
+import { getResumeHref } from "@/lib/public-file"
 
 /** One line of the contact object: `key: value,` that is also a link. */
 type ObjectLine = {
@@ -23,9 +23,7 @@ type ObjectLine = {
 }
 
 export function Contact() {
-  const resumeHref = publicFileExists(profile.resumePath)
-    ? profile.resumePath
-    : undefined
+  const resumeHref = getResumeHref()
 
   const output = [
     { key: "name", value: profile.name },
@@ -101,14 +99,13 @@ export function Contact() {
             meta="bash · exit 0"
             bodyClassName="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"
           >
-            {/* Script output: who, where and when. */}
             <div className="grid border-b lg:grid-cols-[2.75rem_minmax(0,1fr)] lg:border-r lg:border-b-0">
               <Gutter lines={9} className="hidden pt-6 lg:block" />
               <div className="px-4 py-5 font-mono text-[0.8125rem] sm:px-6 sm:py-6">
                 <p aria-hidden="true" className="text-syntax-comment">
                   {"// output"}
                 </p>
-                <dl className="mt-2 grid grid-cols-[4.75rem_minmax(0,1fr)] gap-x-3 sm:grid-cols-[5.5rem_minmax(0,1fr)] gap-y-1.5 leading-6">
+                <dl className="mt-2 grid grid-cols-[4.75rem_minmax(0,1fr)] gap-x-3 gap-y-1.5 leading-6 sm:grid-cols-[5.5rem_minmax(0,1fr)]">
                   {output.map(({ key, value }) => (
                     <div key={key} className="contents">
                       <dt className="text-syntax-keyword">{key}</dt>
@@ -123,12 +120,8 @@ export function Contact() {
               </div>
             </div>
 
-            {/* The ways to reach me, written as a typed object. Every line is a link. */}
             <div className="py-4 font-mono text-[0.8125rem] sm:py-6 sm:text-sm">
-              <p
-                aria-hidden="true"
-                className="px-4 leading-8 sm:px-6"
-              >
+              <p aria-hidden="true" className="px-4 leading-8 sm:px-6">
                 <span className="text-syntax-keyword">export const</span>{" "}
                 contact <span className="text-syntax-comment">= {"{"}</span>
               </p>
@@ -137,7 +130,7 @@ export function Contact() {
                   <li
                     key={line.key}
                     // Phones: the copy button wraps under the email so the address stays on one line.
-                    className="flex flex-wrap items-center transition-colors sm:flex-nowrap hover:bg-primary/7 hover:shadow-[inset_2px_0_0_var(--primary)] has-[a:focus-visible]:bg-primary/7 has-[a:focus-visible]:shadow-[inset_2px_0_0_var(--primary)]"
+                    className="flex flex-wrap items-center transition-colors hover:bg-primary/7 hover:shadow-[inset_2px_0_0_var(--primary)] has-[a:focus-visible]:bg-primary/7 has-[a:focus-visible]:shadow-[inset_2px_0_0_var(--primary)] sm:flex-nowrap"
                   >
                     <a
                       href={line.href}

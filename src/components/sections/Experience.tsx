@@ -13,15 +13,14 @@ import {
   nextCommitMessage,
 } from "@/content/experience"
 import { profile } from "@/content/profile"
-import { getVisibleProjects } from "@/lib/projects"
-import { publicFileExists } from "@/lib/public-file"
+import { getVisibleProjects, type ProjectView } from "@/lib/projects"
+import { getResumeHref } from "@/lib/public-file"
 import type { ExperienceEntry, ImpactStat } from "@/lib/types"
-import { cn } from "@/lib/utils"
+import { cn, FOCUS_RING } from "@/lib/utils"
 
 export function Experience() {
-  const resumeHref = publicFileExists(profile.resumePath)
-    ? profile.resumePath
-    : undefined
+  const resumeHref = getResumeHref()
+  const visibleProjects = getVisibleProjects()
 
   return (
     <section
@@ -63,6 +62,7 @@ export function Experience() {
                 <Commit
                   key={`${entry.role}-${entry.period}`}
                   entry={entry}
+                  visibleProjects={visibleProjects}
                   isLast={i === experience.length - 1}
                   delay={i * 0.1}
                 />
@@ -72,7 +72,8 @@ export function Experience() {
             <div className="flex flex-col gap-4 border-t bg-surface-chrome px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
               <p className="font-mono text-[0.8125rem] text-syntax-comment">
                 <span aria-hidden="true">
-                  <span className="text-syntax-keyword">$</span> git commit -m{" "}
+                  <span className="text-syntax-keyword">$</span> git commit
+                  -m{" "}
                 </span>
                 <span className="whitespace-nowrap text-syntax-string">
                   <span aria-hidden="true">&quot;</span>
@@ -187,26 +188,24 @@ function ImpactWindow({ stats }: { stats: ImpactStat[] }) {
 /** One role, drawn as a commit on the `git log --graph` lane. */
 function Commit({
   entry,
+  visibleProjects,
   isLast,
   delay,
 }: {
   entry: ExperienceEntry
+  visibleProjects: ProjectView[]
   isLast: boolean
   delay: number
 }) {
-  // The current role is the branch tip, like HEAD in `git log`.
   const isHead = entry.period.includes("Present")
-
-  // Only projects that render in the Projects section, with their place in its stack.
-  const visible = getVisibleProjects()
+  const headingId = `${slugify(entry.role)}-role`
   const shipped = (entry.shipped ?? []).flatMap((slug) => {
-    const index = visible.findIndex((project) => project.slug === slug)
-    return index === -1 ? [] : [{ project: visible[index], index }]
+    const index = visibleProjects.findIndex((project) => project.slug === slug)
+    return index === -1 ? [] : [{ project: visibleProjects[index], index }]
   })
 
   return (
     <li className="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-x-3 sm:grid-cols-[2rem_minmax(0,1fr)] sm:gap-x-4">
-      {/* Graph lane: a line through each commit, solid accent on the branch tip. */}
       <div aria-hidden="true" className="relative">
         <span
           className={cn(
@@ -227,7 +226,7 @@ function Commit({
 
       <Reveal delay={delay} amount={0.15}>
         <article
-          aria-labelledby={`${slugify(entry.role)}-role`}
+          aria-labelledby={headingId}
           className={cn("pb-10 sm:pb-12", isLast && "pb-8 sm:pb-10")}
         >
           <p className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 font-mono text-xs leading-5">
@@ -249,7 +248,7 @@ function Commit({
           </p>
 
           <h3
-            id={`${slugify(entry.role)}-role`}
+            id={headingId}
             className="mt-2.5 text-lg font-semibold tracking-tight sm:text-xl"
           >
             {entry.role}
@@ -277,7 +276,7 @@ function Commit({
                   <li key={project.slug}>
                     <ProjectJumpLink
                       index={index}
-                      className="grid min-h-11 gap-x-4 gap-y-1.5 rounded-lg border bg-surface-chrome px-3.5 py-3 transition-colors outline-none hover:border-primary/50 focus-visible:ring-3 focus-visible:ring-ring/50 sm:grid-cols-[minmax(0,12.5rem)_minmax(0,1fr)_auto] sm:items-center sm:px-4"
+                      className={`grid min-h-11 gap-x-4 gap-y-1.5 rounded-lg border bg-surface-chrome px-3.5 py-3 transition-colors hover:border-primary/50 sm:grid-cols-[minmax(0,12.5rem)_minmax(0,1fr)_auto] sm:items-center sm:px-4 ${FOCUS_RING}`}
                     >
                       <span className="flex items-center justify-between gap-3 font-mono text-xs">
                         <span aria-hidden="true" className="truncate">
@@ -342,4 +341,7 @@ function Commit({
 }
 
 const slugify = (text: string) =>
-  text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
+  text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")

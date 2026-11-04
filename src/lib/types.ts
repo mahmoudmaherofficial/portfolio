@@ -13,9 +13,7 @@ export type Profile = {
   availabilityShort: string
   /** URL path of the resume PDF under `public/`, starting with "/". */
   resumePath: string
-  /** Paragraphs of the About section. */
   about: string[]
-  /** URL of this portfolio's public GitHub repo. */
   repoUrl: string
   /** Profile photo under `public/`, with its intrinsic size. */
   photo: { src: string; width: number; height: number }
@@ -30,7 +28,6 @@ export type ExperienceEntry = {
   /** Short scope label shown in the meta line, e.g. "team of 4". */
   badge?: string
   summary: string
-  /** Key pieces of work, one per line. */
   highlights?: string[]
   /** Slugs of projects shipped in this role. Only projects that render are listed. */
   shipped?: string[]
@@ -69,7 +66,6 @@ export type Site = {
   logo: string
   /** Every nav link, in page order. Only links to rendered sections are shown. */
   nav: NavItem[]
-  /** Page description for search results and link previews. */
   metaDescription: string
   footerTagline: string
   /** Comment under the footer's repo link. */

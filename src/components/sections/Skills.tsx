@@ -7,14 +7,12 @@ import { Reveal } from "@/components/motion/Reveal"
 import { ProjectJumpLink } from "@/components/sections/ProjectJumpLink"
 import { skillsIntro } from "@/content/skills"
 import { getSkillGroups, type SkillGroupView } from "@/lib/skills"
-import { cn } from "@/lib/utils"
+import { cn, FOCUS_RING } from "@/lib/utils"
 
 /** Bento spans by group order. Groups past the fourth take a single cell. */
 const SPANS = ["md:col-span-2", "", "", "md:col-span-2 lg:col-span-2"]
 
 const LEGEND = "// ×n = projects using it"
-
-const FOCUS = "outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
 
 export function Skills() {
   const groups = getSkillGroups()
@@ -41,7 +39,6 @@ export function Skills() {
             meta={LEGEND}
             bodyClassName="p-3 sm:p-6"
           >
-            {/* The legend sits in the window chrome on wider screens; phones get it here. */}
             <p
               aria-hidden="true"
               className="font-mono text-sm text-syntax-comment"
@@ -125,7 +122,7 @@ function SkillGroupPanel({
                   <li key={project.slug} className="min-w-0">
                     <ProjectJumpLink
                       index={index}
-                      className={`flex min-h-11 items-center justify-between gap-2 rounded-md border px-2.5 text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground sm:min-h-8 sm:justify-start sm:border-0 sm:px-0 ${FOCUS}`}
+                      className={`flex min-h-11 items-center justify-between gap-2 rounded-md border px-2.5 text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground sm:min-h-8 sm:justify-start sm:border-0 sm:px-0 ${FOCUS_RING}`}
                     >
                       <span aria-hidden="true" className="truncate">
                         {project.slug}
@@ -146,7 +143,7 @@ function SkillGroupPanel({
                 href={group.proof.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`mt-2 flex min-h-11 items-center justify-between gap-2 rounded-md border border-primary/35 px-2.5 text-primary transition-colors hover:border-primary/70 sm:mt-0 sm:inline-flex sm:min-h-8 sm:border-0 sm:px-0 sm:hover:underline ${FOCUS}`}
+                className={`mt-2 flex min-h-11 items-center justify-between gap-2 rounded-md border border-primary/35 px-2.5 text-primary transition-colors hover:border-primary/70 sm:mt-0 sm:inline-flex sm:min-h-8 sm:border-0 sm:px-0 sm:hover:underline ${FOCUS_RING}`}
               >
                 {group.proof.label}
                 <ArrowUpRight aria-hidden="true" className="size-3.5" />

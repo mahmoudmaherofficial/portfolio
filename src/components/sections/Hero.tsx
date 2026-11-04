@@ -7,17 +7,13 @@ import { CairoClock } from "@/components/sections/CairoClock"
 import { HeroCodeCard } from "@/components/sections/HeroCodeCard"
 import { buttonVariants } from "@/components/ui/button"
 import { profile } from "@/content/profile"
-import { cn } from "@/lib/utils"
+import { cn, FOCUS_RING } from "@/lib/utils"
 import { getVisibleProjects } from "@/lib/projects"
-import { publicFileExists } from "@/lib/public-file"
-
-const FOCUS = "outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+import { getResumeHref } from "@/lib/public-file"
 
 export function Hero() {
   const metaLine = [profile.location, profile.timezone].join(" · ")
-  const resumeHref = publicFileExists(profile.resumePath)
-    ? profile.resumePath
-    : undefined
+  const resumeHref = getResumeHref()
   const hasProjects = getVisibleProjects().length > 0
   const buttonCount = Number(hasProjects) + Number(Boolean(resumeHref))
 
@@ -35,11 +31,13 @@ export function Hero() {
             {/* Availability as a git-branch badge, like the editor's status bar. It leads to Contact. */}
             <a
               href="#contact"
-              className={`group/badge inline-flex h-7 items-center gap-1.5 rounded-md bg-primary px-2.5 font-mono text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/85 sm:h-6.5 ${FOCUS}`}
+              className={`group/badge inline-flex h-7 items-center gap-1.5 rounded-md bg-primary px-2.5 font-mono text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/85 sm:h-6.5 ${FOCUS_RING}`}
             >
               <span aria-hidden="true">⎇</span>
               open-to-work
-              <span className="sr-only">: {profile.availability}. Contact me</span>
+              <span className="sr-only">
+                : {profile.availability}. Contact me
+              </span>
               <ArrowRight
                 aria-hidden="true"
                 className="size-3.5 transition-transform group-hover/badge:translate-x-0.5 motion-reduce:transition-none"
@@ -74,7 +72,6 @@ export function Hero() {
             </p>
           </FadeIn>
 
-          {/* Phones: the buttons share one row at equal width. */}
           <FadeIn
             delay={0.2}
             className={cn(
@@ -139,7 +136,7 @@ function ScrollHint({ className }: { className?: string }) {
       href="#about"
       className={cn(
         "min-h-11 items-center gap-2 rounded-md px-3 font-mono text-xs text-syntax-comment transition-colors hover:text-foreground",
-        FOCUS,
+        FOCUS_RING,
         className
       )}
     >

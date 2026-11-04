@@ -74,7 +74,10 @@ export default async function OpengraphImage() {
   const [firstName, ...lastNames] = profile.name.split(" ")
   const statusLeft = ["open-to-work", profile.timezone, "TypeScript"]
 
-  const codeText = lines.flat().map((token) => token.text).join("")
+  const codeText = lines
+    .flat()
+    .map((token) => token.text)
+    .join("")
   const monoText = `${site.logo}const role = "${profile.title}"profile.tsresume.pdfTSPDF${statusLeft.join("")}${host}${codeText}0123456789`
 
   const [sans, mono, monoBold] = await Promise.all([
@@ -97,7 +100,6 @@ export default async function OpengraphImage() {
         fontFamily: "Geist Mono",
       }}
     >
-      {/* Soft accent glow behind the code card. */}
       <div
         style={{
           position: "absolute",
@@ -111,7 +113,6 @@ export default async function OpengraphImage() {
         }}
       />
 
-      {/* Left: logo, badge, name and role. */}
       <div
         style={{
           position: "absolute",
@@ -181,7 +182,6 @@ export default async function OpengraphImage() {
         </div>
       </div>
 
-      {/* Right: the hero's profile.ts card. */}
       <div
         style={{
           position: "absolute",
@@ -266,7 +266,6 @@ export default async function OpengraphImage() {
         </div>
       </div>
 
-      {/* Status bar, like the one fixed to the bottom of the site. */}
       <div
         style={{
           position: "absolute",
