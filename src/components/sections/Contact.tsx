@@ -19,7 +19,7 @@ export function Contact() {
       aria-labelledby="contact-heading"
       className="relative border-t py-16 offscreen-section sm:py-28"
     >
-      <div className="mx-auto flex w-full max-w-3xl flex-col px-4 sm:items-center sm:px-6 sm:text-center">
+      <div className="container flex max-w-3xl flex-col sm:items-center sm:text-center">
         <Reveal>
           <SectionHeading
             id="contact-heading"

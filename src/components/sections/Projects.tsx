@@ -29,7 +29,7 @@ export function Projects() {
       aria-labelledby="projects-heading"
       className="relative border-t py-16 sm:py-28"
     >
-      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+      <div className="container">
         {/*
           Phones and tablets: the label, title and progress stay pinned under the site header
           (h-11) while the cards stack below. Desktop: scrolls away normally.

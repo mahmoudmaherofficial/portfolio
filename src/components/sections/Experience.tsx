@@ -12,7 +12,7 @@ export function Experience() {
       aria-labelledby="experience-heading"
       className="relative border-t py-16 offscreen-section sm:py-28"
     >
-      <div className="mx-auto grid w-full max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] lg:gap-16">
+      <div className="container grid gap-12 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] lg:gap-16">
         {/* Heading stays in view while the timeline scrolls past on wide screens. */}
         <div className="lg:sticky lg:top-24 lg:self-start">
           <Reveal>

@@ -25,7 +25,7 @@ export function Hero() {
       <div aria-hidden="true" className="absolute inset-0 -z-10 hero-grid" />
       <HeroGrid />
 
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-4 py-14 sm:px-6 sm:py-24 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)]">
+      <div className="container grid items-center gap-12 py-14 sm:py-24 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)]">
         <div>
           <FadeIn>
             {/* Availability as a git-branch badge, like the editor's status bar. */}

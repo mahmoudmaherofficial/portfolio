@@ -18,7 +18,7 @@ export function Skills() {
       aria-labelledby="skills-heading"
       className="relative border-t py-24 offscreen-section sm:py-32"
     >
-      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+      <div className="container">
         <Reveal>
           <SectionHeading id="skills-heading" command="cat skills.json">
             Skills

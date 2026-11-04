@@ -14,7 +14,7 @@ export function Footer({ nav }: { nav: NavItem[] }) {
 
   return (
     <footer className="border-t">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-10 sm:gap-8 sm:px-6 sm:py-12 md:flex-row md:items-start md:justify-between">
+      <div className="container flex flex-col gap-6 py-10 sm:gap-8 sm:py-12 md:flex-row md:items-start md:justify-between">
         <div>
           <Logo className="rounded-md text-xl" />
           <p className="mt-3 text-sm text-muted-foreground">
@@ -48,7 +48,7 @@ export function Footer({ nav }: { nav: NavItem[] }) {
       </div>
 
       <div className="border-t">
-        <p className="mx-auto w-full max-w-6xl px-4 py-6 font-mono text-xs text-muted-foreground sm:px-6">
+        <p className="container py-6 font-mono text-xs text-muted-foreground">
           © {year} {profile.name}. All rights reserved.
         </p>
       </div>

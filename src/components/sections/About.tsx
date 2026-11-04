@@ -25,7 +25,7 @@ export function About() {
       aria-labelledby="about-heading"
       className="relative border-t py-16 offscreen-section sm:py-28"
     >
-      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+      <div className="container">
         <Reveal>
           <SectionHeading id="about-heading" command="cat about.md">
             About
