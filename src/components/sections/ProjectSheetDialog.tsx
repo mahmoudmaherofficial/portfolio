@@ -4,6 +4,7 @@ import type { RefObject } from "react"
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 
+import { FileIcon } from "@/components/ide/FileIcon"
 import {
   ProjectDetails,
   ProjectLinks,
@@ -56,17 +57,23 @@ export default function ProjectSheetDialog({
         >
           {project && (
             <>
-              <header className="flex items-center justify-between gap-4 border-b px-4 py-2">
-                <DialogPrimitive.Close
-                  aria-label="Close"
-                  className={buttonVariants({
-                    variant: "ghost",
-                    size: "icon-lg",
-                  })}
-                >
-                  <X aria-hidden="true" />
-                </DialogPrimitive.Close>
-                <p className="font-mono text-xs text-muted-foreground tabular-nums">
+              <header className="flex h-12 items-stretch justify-between border-b bg-surface-chrome">
+                <div className="flex min-w-0 items-stretch">
+                  <DialogPrimitive.Close
+                    aria-label="Close"
+                    className="flex w-12 shrink-0 items-center justify-center border-r text-foreground outline-none hover:bg-foreground/5 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset"
+                  >
+                    <X aria-hidden="true" className="size-4.5" />
+                  </DialogPrimitive.Close>
+                  <p
+                    aria-hidden="true"
+                    className="flex min-w-0 items-center gap-2 bg-background px-3.5 font-mono text-xs shadow-[inset_0_2px_0_var(--primary)]"
+                  >
+                    <FileIcon kind="tsx" />
+                    <span className="truncate">{project.slug}.tsx</span>
+                  </p>
+                </div>
+                <p className="flex shrink-0 items-center px-4 font-mono text-xs text-muted-foreground tabular-nums">
                   <span className="text-foreground">{pad(index + 1)}</span> /{" "}
                   {pad(total)}
                 </p>

@@ -17,11 +17,15 @@ export function ProjectMeta({
   return (
     <p
       className={cn(
-        "flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs text-muted-foreground",
+        "flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs text-syntax-comment",
         className
       )}
     >
-      {metaOf(project)}
+      <span>
+        <span aria-hidden="true">{"/** "}</span>
+        {metaOf(project)}
+        <span aria-hidden="true">{" */"}</span>
+      </span>
       {project.badge && (
         <span className="rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-primary">
           {project.badge}
@@ -61,7 +65,7 @@ export function ProjectTech({ project }: { project: ProjectView }) {
     <ul aria-label="Tech used" className="mt-6 flex flex-wrap gap-2">
       {project.tech.map((tech) => (
         <li key={tech}>
-          <TechTag name={tech} />
+          <TechTag name={tech} variant="string" />
         </li>
       ))}
     </ul>

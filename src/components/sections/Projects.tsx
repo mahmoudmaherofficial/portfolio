@@ -1,4 +1,7 @@
 import ScrollStack, { ScrollStackItem } from "@/components/ScrollStack"
+import { EditorWindow } from "@/components/ide/EditorWindow"
+import { Gutter } from "@/components/ide/Gutter"
+import { SectionHeading } from "@/components/ide/SectionHeading"
 import SpotlightCard from "@/components/SpotlightCard"
 import { StackProgress } from "@/components/StackProgress"
 import { Reveal } from "@/components/motion/Reveal"
@@ -24,7 +27,7 @@ export function Projects() {
     <section
       id="projects"
       aria-labelledby="projects-heading"
-      className="relative border-t py-24 sm:py-32"
+      className="relative border-t py-16 sm:py-28"
     >
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
         {/*
@@ -36,24 +39,18 @@ export function Projects() {
           className="sticky top-11 z-20 -mx-4 bg-background px-4 py-3 sm:-mx-6 sm:px-6 lg:static lg:mx-0 lg:bg-transparent lg:p-0"
         >
           <Reveal>
-            <p
-              aria-hidden="true"
-              className="font-mono text-xs text-muted-foreground"
+            <SectionHeading
+              id="projects-heading"
+              command="ls projects/"
+              aside={
+                <StackProgress
+                  label="Jump to a project"
+                  labels={projects.map((project) => project.title)}
+                />
+              }
             >
-              02 // projects
-            </p>
-            <div className="mt-2 flex flex-wrap items-end justify-between gap-x-6 gap-y-2 lg:mt-3">
-              <h2
-                id="projects-heading"
-                className="text-3xl font-semibold tracking-tight sm:text-4xl"
-              >
-                Projects
-              </h2>
-              <StackProgress
-                label="Jump to a project"
-                labels={projects.map((project) => project.title)}
-              />
-            </div>
+              Projects
+            </SectionHeading>
           </Reveal>
         </div>
         <Reveal>
@@ -80,40 +77,55 @@ export function Projects() {
                 className="shadow-[0_-16px_40px_-24px_rgb(0_0_0/0.5)]"
               >
                 <div className="lg:hidden">
-                  <SpotlightCard intensity={0.08}>
-                    <ProjectCompactCard project={project} index={index} />
+                  <SpotlightCard intensity={0.08} className="bg-surface-pane">
+                    <EditorWindow
+                      tab={{ name: `${project.slug}.tsx`, kind: "tsx" }}
+                      className="rounded-none border-0 bg-transparent"
+                    >
+                      <ProjectCompactCard project={project} index={index} />
+                    </EditorWindow>
                   </SpotlightCard>
                 </div>
 
                 <SpotlightCard
                   intensity={0.08}
-                  className="hidden grid-cols-[minmax(0,1fr)_minmax(0,30rem)] gap-10 p-8 lg:grid"
+                  className="hidden bg-surface-pane lg:block"
                 >
-                  <article
-                    aria-labelledby={`${project.slug}-title`}
-                    className="flex flex-col"
+                  <EditorWindow
+                    tab={{ name: `${project.slug}.tsx`, kind: "tsx" }}
+                    className="rounded-none border-0 bg-transparent"
+                    bodyClassName="grid grid-cols-[2.75rem_minmax(0,1fr)_minmax(0,30rem)]"
                   >
-                    <ProjectMeta project={project} />
-                    <h3
-                      id={`${project.slug}-title`}
-                      className="mt-3 text-2xl font-semibold tracking-tight"
+                    <Gutter lines={15} className="pt-8" />
+                    <article
+                      aria-labelledby={`${project.slug}-title`}
+                      className="flex flex-col px-9 py-8"
                     >
-                      {project.title}
-                    </h3>
-                    <p className="mt-3 leading-relaxed text-foreground/90">
-                      {project.summary}
-                    </p>
-                    <ProjectDetails project={project} className="mt-6" />
-                    <ProjectTech project={project} />
-                    <ProjectLinks project={project} className="mt-auto pt-6" />
-                  </article>
+                      <ProjectMeta project={project} />
+                      <h3
+                        id={`${project.slug}-title`}
+                        className="mt-3 text-2xl font-semibold tracking-tight"
+                      >
+                        {project.title}
+                      </h3>
+                      <p className="mt-3 leading-relaxed text-foreground/90">
+                        {project.summary}
+                      </p>
+                      <ProjectDetails project={project} className="mt-6" />
+                      <ProjectTech project={project} />
+                      <ProjectLinks
+                        project={project}
+                        className="mt-auto pt-6"
+                      />
+                    </article>
 
-                  <div>
-                    <ProjectGallery
-                      title={project.title}
-                      shots={project.shots}
-                    />
-                  </div>
+                    <div className="py-8 pr-8">
+                      <ProjectGallery
+                        title={project.title}
+                        shots={project.shots}
+                      />
+                    </div>
+                  </EditorWindow>
                 </SpotlightCard>
               </ScrollStackItem>
             ))}
