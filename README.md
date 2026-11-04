@@ -78,6 +78,7 @@ This repo is the source code of the site, and a public sample of how I write Typ
 
 - **Stack:** Next.js 16 (App Router), React 19, TypeScript (strict), Tailwind CSS v4, shadcn/ui on Base UI, Framer Motion, hosted on Vercel.
 - **Static, typed content:** everything on the page comes from typed files in [`src/content/`](src/content) and is prerendered at build time. There is no CMS, no API and no environment variables.
+- **Editor design system:** the page is styled as a code editor. Semantic tokens in `globals.css` (editor surfaces plus three muted syntax tints) feed a small server-rendered kit in [`src/components/ide/`](src/components/ide) (`EditorWindow`, `SectionHeading`, `Tok`, ...). Only the Explorer, status bar and copy button run on the client.
 - **Motion with care:** Framer Motion via `LazyMotion` and `m` components, reduced-motion support, no entrance animation on the LCP element, and content that stays readable without JavaScript.
 - **Quality:** accessible (keyboard navigation, focus states, contrast in both themes), SEO metadata with a dynamic OG image, and Lighthouse 90+ as the target.
 
