@@ -14,6 +14,7 @@ export function EditorWindow({
   meta,
   path,
   dots = false,
+  compactOnPhones = false,
   className,
   bodyClassName,
   children,
@@ -26,6 +27,8 @@ export function EditorWindow({
   path?: string[]
   /** macOS-style window dots before the tabs. */
   dots?: boolean
+  /** Hides the window dots and the breadcrumb below `sm`, where space is tight. */
+  compactOnPhones?: boolean
   className?: string
   bodyClassName?: string
   children: React.ReactNode
@@ -42,7 +45,10 @@ export function EditorWindow({
           {dots && (
             <div
               aria-hidden="true"
-              className="flex items-center gap-1.5 px-3.5"
+              className={cn(
+                "flex items-center gap-1.5 px-3.5",
+                compactOnPhones && "max-sm:hidden"
+              )}
             >
               <span className="size-2.5 rounded-full bg-foreground/15" />
               <span className="size-2.5 rounded-full bg-foreground/15" />
@@ -57,7 +63,7 @@ export function EditorWindow({
             <a
               href={extraTab.href}
               download={extraTab.download || undefined}
-              className="flex shrink-0 items-center gap-2 border-l px-3.5 text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset sm:px-4"
+              className="flex shrink-0 items-center gap-2 border-l px-3.5 text-muted-foreground transition-[color,box-shadow] outline-none hover:text-foreground hover:shadow-[inset_0_-2px_0_var(--primary)] focus-visible:text-foreground focus-visible:shadow-[inset_0_-2px_0_var(--primary)] focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset sm:px-4"
             >
               <FileIcon kind={extraTab.kind} />
               {extraTab.name}
@@ -73,7 +79,10 @@ export function EditorWindow({
       {path && (
         <p
           aria-hidden="true"
-          className="border-b border-border/50 px-4 py-2 font-mono text-[0.6875rem] text-syntax-comment"
+          className={cn(
+            "border-b border-border/50 px-4 py-2 font-mono text-[0.6875rem] text-syntax-comment",
+            compactOnPhones && "max-sm:hidden"
+          )}
         >
           {path.join(" › ")}
         </p>

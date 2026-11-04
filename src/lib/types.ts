@@ -1,6 +1,10 @@
 export type Profile = {
   name: string
   title: string
+  /** Core stack, shown in the hero's code card. */
+  stack: string[]
+  /** Headline delivery count, shown in the hero's code card, e.g. "10+ client projects". */
+  shipped: string
   bio: string
   location: string
   timezone: string

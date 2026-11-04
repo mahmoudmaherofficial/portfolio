@@ -1,8 +1,9 @@
-import { ArrowRight } from "lucide-react"
+import { ArrowDown, ArrowRight } from "lucide-react"
 
 import { HeroGrid } from "@/components/HeroGrid"
 import { FadeIn } from "@/components/motion/FadeIn"
 import { Tok } from "@/components/ide/Tok"
+import { CairoClock } from "@/components/sections/CairoClock"
 import { HeroCodeCard } from "@/components/sections/HeroCodeCard"
 import { buttonVariants } from "@/components/ui/button"
 import { profile } from "@/content/profile"
@@ -10,12 +11,15 @@ import { cn } from "@/lib/utils"
 import { getVisibleProjects } from "@/lib/projects"
 import { publicFileExists } from "@/lib/public-file"
 
+const FOCUS = "outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+
 export function Hero() {
   const metaLine = [profile.location, profile.timezone].join(" · ")
   const resumeHref = publicFileExists(profile.resumePath)
     ? profile.resumePath
     : undefined
   const hasProjects = getVisibleProjects().length > 0
+  const buttonCount = Number(hasProjects) + Number(Boolean(resumeHref))
 
   return (
     <section
@@ -28,20 +32,19 @@ export function Hero() {
       <div className="container grid items-center gap-12 py-14 sm:py-24 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)]">
         <div>
           <FadeIn>
-            {/* Availability as a git-branch badge, like the editor's status bar. */}
-            <p className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[0.71875rem] sm:text-xs">
-              <span className="inline-flex h-6 items-center gap-1.5 rounded-md bg-primary px-2.5 font-semibold text-primary-foreground">
-                <span aria-hidden="true">⎇</span>
-                open-to-work
-              </span>
-              <span className="inline-flex items-center gap-2 text-muted-foreground">
-                <span aria-hidden="true" className="relative flex size-[7px]">
-                  <span className="absolute inline-flex size-full rounded-full bg-primary opacity-60 motion-safe:animate-ping" />
-                  <span className="relative inline-flex size-[7px] rounded-full bg-primary ring-3 ring-primary/20" />
-                </span>
-                {profile.availability}
-              </span>
-            </p>
+            {/* Availability as a git-branch badge, like the editor's status bar. It leads to Contact. */}
+            <a
+              href="#contact"
+              className={`group/badge inline-flex h-7 items-center gap-1.5 rounded-md bg-primary px-2.5 font-mono text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/85 sm:h-6.5 ${FOCUS}`}
+            >
+              <span aria-hidden="true">⎇</span>
+              open-to-work
+              <span className="sr-only">: {profile.availability}. Contact me</span>
+              <ArrowRight
+                aria-hidden="true"
+                className="size-3.5 transition-transform group-hover/badge:translate-x-0.5 motion-reduce:transition-none"
+              />
+            </a>
           </FadeIn>
 
           {/* LCP: name, title and bio render without an entrance animation. */}
@@ -66,13 +69,18 @@ export function Hero() {
 
           <FadeIn delay={0.1}>
             <p className="mt-6 font-mono text-xs">
-              <Tok kind="comment">{`// ${metaLine}`}</Tok>
+              <Tok kind="comment">{`// ${metaLine} `}</Tok>
+              <CairoClock />
             </p>
           </FadeIn>
 
+          {/* Phones: the buttons share one row at equal width. */}
           <FadeIn
             delay={0.2}
-            className="mt-8 flex flex-wrap gap-3 max-[399px]:flex-col sm:mt-10"
+            className={cn(
+              "mt-8 grid gap-3 sm:mt-10 sm:flex sm:flex-wrap",
+              buttonCount > 1 && "grid-cols-2"
+            )}
           >
             {hasProjects && (
               <a
@@ -110,8 +118,36 @@ export function Hero() {
             className="absolute inset-0 -z-10 hidden scale-110 rounded-full bg-primary/10 blur-3xl lg:block dark:bg-primary/15"
           />
           <HeroCodeCard resumeHref={resumeHref} />
+          <ScrollHint className="mx-auto mt-5 flex w-fit lg:hidden" />
         </FadeIn>
       </div>
+
+      <FadeIn
+        delay={0.6}
+        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 lg:block"
+      >
+        <ScrollHint className="flex" />
+      </FadeIn>
     </section>
+  )
+}
+
+/** Prompt-style hint that more of the page follows. */
+function ScrollHint({ className }: { className?: string }) {
+  return (
+    <a
+      href="#about"
+      className={cn(
+        "min-h-11 items-center gap-2 rounded-md px-3 font-mono text-xs text-syntax-comment transition-colors hover:text-foreground",
+        FOCUS,
+        className
+      )}
+    >
+      <ArrowDown aria-hidden="true" className="size-3.5 text-primary" />
+      <span aria-hidden="true">
+        <span className="text-syntax-keyword">$</span> cat about.md
+      </span>
+      <span className="sr-only">Scroll to About</span>
+    </a>
   )
 }
