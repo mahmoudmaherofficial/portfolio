@@ -4,38 +4,9 @@ import { useEffect, useState } from "react"
 
 import { FileIcon } from "@/components/ide/FileIcon"
 import { useActiveSection } from "@/hooks/useActiveSection"
+import { useCairoTime } from "@/hooks/useCairoTime"
 import type { NavItem } from "@/lib/types"
 import { cn } from "@/lib/utils"
-
-const cairoTime = new Intl.DateTimeFormat("en-GB", {
-  timeZone: "Africa/Cairo",
-  hour: "2-digit",
-  minute: "2-digit",
-})
-
-/** Cairo time, refreshed on each minute. Null until mounted, so server and client markup match. */
-function useCairoTime(): string | null {
-  const [time, setTime] = useState<string | null>(null)
-
-  useEffect(() => {
-    let interval = 0
-    const tick = () => setTime(cairoTime.format(new Date()))
-    tick()
-    const timeout = window.setTimeout(
-      () => {
-        tick()
-        interval = window.setInterval(tick, 60_000)
-      },
-      60_000 - (Date.now() % 60_000)
-    )
-    return () => {
-      window.clearTimeout(timeout)
-      window.clearInterval(interval)
-    }
-  }, [])
-
-  return time
-}
 
 /** Scroll position as an editor line number (1–999). Null until mounted. */
 function useScrollLine(): number | null {
