@@ -65,7 +65,7 @@ export const projects: Project[] = [
     whatIDid:
       "Built a fully bilingual Arabic/English site with RTL support, SEO setup, and handled deployment and launch.",
     tech: ["Next.js", "Tailwind CSS", "i18n / RTL", "SEO"],
-    links: [],
+    links: [{ label: "Live site", href: "https://alarab-construction.com/" }],
     screenshots: [
       {
         src: "/projects/metal-construction/01-hero.webp",
@@ -171,6 +171,7 @@ export const projects: Project[] = [
       "Vercel",
     ],
     links: [
+      { label: "Live site", href: "https://luxelanestore.vercel.app/" },
       {
         label: "GitHub",
         href: "https://github.com/mahmoudmaherofficial/luxelane-frontend",
