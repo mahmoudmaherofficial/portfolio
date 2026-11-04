@@ -1,6 +1,7 @@
 import type { Site } from "@/lib/types"
 
 export const site: Site = {
+  url: "https://mahmoudmaher.site",
   logo: "MM.",
   nav: [
     { id: "about", label: "About" },

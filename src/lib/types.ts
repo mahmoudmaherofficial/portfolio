@@ -32,6 +32,8 @@ export type NavItem = {
 }
 
 export type Site = {
+  /** Production origin, used for canonical URLs, the sitemap and OG metadata. */
+  url: string
   /** Monogram shown in the header and footer; links to the hero. */
   logo: string
   /** Every nav link, in page order. Only links to rendered sections are shown. */
