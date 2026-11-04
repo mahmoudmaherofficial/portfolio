@@ -139,6 +139,8 @@ Rich, using Framer Motion, with these constraints:
 "typecheck": "tsc --noEmit"
 ```
 
+`npm run build:preview` builds like a Vercel preview (Projects shown with placeholder screenshots until real ones exist); serve it with `npm run start`.
+
 Use `eslint .` directly (`next lint` was removed in Next.js 16). Run `npm run typecheck`, `npm run lint` and `npm run build` before saying any task is done.
 
 ### No tests

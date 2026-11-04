@@ -142,3 +142,12 @@
     background-size: 60px 60px;
     mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
 }
+
+/*
+ * Below-the-fold sections: the browser skips their layout and paint until they near the viewport,
+ * which keeps the first render cheap. `auto` remembers each section's real height once it has rendered.
+ */
+@utility offscreen-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+}

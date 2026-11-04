@@ -25,8 +25,7 @@ const external = {
   rel: "noopener noreferrer",
 } as const
 
-const focusRing =
-  "outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+const focusRing = "outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
 
 export function Contact() {
   const email = contact.channels.find((channel) => channel.kind === "email")
@@ -36,7 +35,7 @@ export function Contact() {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="relative border-t py-24 sm:py-32"
+      className="relative border-t py-24 offscreen-section sm:py-32"
     >
       <div className="mx-auto flex w-full max-w-3xl flex-col items-center px-4 text-center sm:px-6">
         <Reveal>

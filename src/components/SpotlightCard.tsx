@@ -243,9 +243,11 @@ const SpotlightCard = ({
       if (pointer.active || state.presence > 0) wake();
     };
 
+    // Only the ambient drift needs a frame without input. Waking every card on mount made each
+    // one read layout and then write styles, forcing repeated layouts while the page loads.
     const observer = new IntersectionObserver(entries => {
       state.visible = entries.some(entry => entry.isIntersecting);
-      if (state.visible) wake();
+      if (state.visible && (settingsRef.current.ambient || state.presence > 0)) wake();
     });
     observer.observe(root);
     window.addEventListener('pointermove', onMove);
@@ -256,7 +258,7 @@ const SpotlightCard = ({
     root.addEventListener('pointerdown', onDown);
     root.addEventListener('focusin', onFocusIn);
     root.addEventListener('focusout', onFocusOut);
-    wake();
+    if (settingsRef.current.ambient) wake();
 
     return () => {
       alive = false;

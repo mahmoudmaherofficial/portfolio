@@ -40,6 +40,8 @@ const geist = Geist({ subsets: ["latin"], variable: "--font-sans" })
 const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  // Not preloaded: the LCP text (hero bio) uses Geist Sans, so the mono file can load after first paint.
+  preload: false,
 })
 
 export default function RootLayout({

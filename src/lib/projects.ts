@@ -32,3 +32,7 @@ export function getVisibleProjects(): ProjectView[] {
     return [{ ...project, shots }]
   })
 }
+
+/** Meta line for a project: type, role and date, whichever are set. */
+export const metaOf = (project: ProjectView) =>
+  [project.type, project.role, project.date].filter(Boolean).join(" · ")
