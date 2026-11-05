@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { memo, useEffect, useState } from "react"
 
 import { Tok, type TokKind } from "@/components/ide/Tok"
 import type { CodeLine, CodeTokenKind } from "@/lib/profile-code"
@@ -124,71 +124,87 @@ export function TypedCode({
       className="py-3 font-mono text-xs leading-[1.375rem] sm:overflow-x-auto sm:py-3.5 sm:text-[13px] sm:leading-[1.625rem]"
     >
       <code>
-        {lines.map((line, i) => {
-          const typedInLine = Math.max(
-            0,
-            Math.min(lengths[i], count - starts[i])
-          )
-          const started = count > starts[i] || i === 0
-
-          let offset = 0
-          const slices = line.map((token) => {
-            const typed = Math.max(
-              0,
-              Math.min(token.text.length, typedInLine - offset)
-            )
-            offset += token.text.length
-            return {
-              kind: TOKEN_KIND[token.kind],
-              typed: token.text.slice(0, typed),
-              rest: token.text.slice(typed),
-            }
-          })
-
-          return (
-            <span
-              key={i}
-              className={cn(
-                "grid grid-cols-[1.875rem_minmax(0,1fr)] pr-3 sm:grid-cols-[2.75rem_auto] sm:pr-4",
-                i === highlight &&
-                  "bg-primary/8 shadow-[inset_2px_0_0_var(--primary)]"
-              )}
-            >
-              <span
-                data-motion
-                style={started ? undefined : { opacity: 0 }}
-                className={cn(
-                  "pr-2.5 text-right select-none sm:pr-4",
-                  HIDDEN,
-                  i === highlight ? "text-primary" : "text-gutter"
-                )}
-              >
-                {i + 1}
-              </span>
-              {/* Phones: long lines wrap, with continuation lines indented past the key. */}
-              <span className="pl-[4ch] -indent-[4ch] break-words whitespace-pre-wrap sm:pl-0 sm:indent-0 sm:whitespace-pre">
-                {slices.map((slice, j) => (
-                  <TokenSlice
-                    key={j}
-                    kind={slice.kind}
-                    text={slice.typed}
-                    part="typed"
-                  />
-                ))}
-                {i === cursorLine && <Cursor blink={done} />}
-                {slices.map((slice, j) => (
-                  <TokenSlice
-                    key={j}
-                    kind={slice.kind}
-                    text={slice.rest}
-                    part="rest"
-                  />
-                ))}
-              </span>
-            </span>
-          )
-        })}
+        {lines.map((line, i) => (
+          <CodeRow
+            key={i}
+            line={line}
+            number={i + 1}
+            typed={Math.max(0, Math.min(lengths[i], count - starts[i]))}
+            started={count > starts[i] || i === 0}
+            highlighted={i === highlight}
+            cursor={i === cursorLine ? (done ? "blink" : "solid") : "none"}
+          />
+        ))}
       </code>
     </pre>
   )
 }
+
+/**
+ * One line of code. Memoized so that each typing frame re-renders only the line under the
+ * cursor; finished and not-yet-started lines keep the same props and are skipped.
+ */
+const CodeRow = memo(function CodeRow({
+  line,
+  number,
+  typed: typedInLine,
+  started,
+  highlighted,
+  cursor,
+}: {
+  line: CodeLine
+  number: number
+  /** Characters typed so far in this line. */
+  typed: number
+  started: boolean
+  highlighted: boolean
+  cursor: "none" | "solid" | "blink"
+}) {
+  const slices = line.map((token, j) => {
+    const offset = line
+      .slice(0, j)
+      .reduce((sum, previous) => sum + previous.text.length, 0)
+    const typed = Math.max(0, Math.min(token.text.length, typedInLine - offset))
+    return {
+      kind: TOKEN_KIND[token.kind],
+      typed: token.text.slice(0, typed),
+      rest: token.text.slice(typed),
+    }
+  })
+
+  return (
+    <span
+      className={cn(
+        "grid grid-cols-[1.875rem_minmax(0,1fr)] pr-3 sm:grid-cols-[2.75rem_auto] sm:pr-4",
+        highlighted && "bg-primary/8 shadow-[inset_2px_0_0_var(--primary)]"
+      )}
+    >
+      <span
+        data-motion
+        style={started ? undefined : { opacity: 0 }}
+        className={cn(
+          "pr-2.5 text-right select-none sm:pr-4",
+          HIDDEN,
+          highlighted ? "text-primary" : "text-gutter"
+        )}
+      >
+        {number}
+      </span>
+      {/* Phones: long lines wrap, with continuation lines indented past the key. */}
+      <span className="pl-[4ch] -indent-[4ch] break-words whitespace-pre-wrap sm:pl-0 sm:indent-0 sm:whitespace-pre">
+        {slices.map((slice, j) => (
+          <TokenSlice
+            key={j}
+            kind={slice.kind}
+            text={slice.typed}
+            part="typed"
+          />
+        ))}
+        {cursor !== "none" && <Cursor blink={cursor === "blink"} />}
+        {slices.map((slice, j) => (
+          <TokenSlice key={j} kind={slice.kind} text={slice.rest} part="rest" />
+        ))}
+      </span>
+    </span>
+  )
+})
