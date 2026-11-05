@@ -1,3 +1,7 @@
+# AGENTS.md
+
+The project instructions live in [`CLAUDE.md`](./CLAUDE.md). Read it in full before doing anything in this repo and follow it exactly: content rules, stack and conventions, design and motion rules, quality bar, and the git workflow. It is the single source of truth; this file does not repeat it, so nothing here can drift out of sync.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know
