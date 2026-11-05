@@ -65,7 +65,7 @@
   /* Editor surfaces and syntax tints. Syntax colors are for code-like text only. */
   --surface-pane: oklch(0.985 0 0);
   --surface-chrome: oklch(0.961 0 0);
-  --gutter: oklch(0.791 0.008 260.7);
+  --gutter: oklch(0.54 0.008 260.7);
   --syntax-keyword: oklch(0.489 0.189 285);
   --syntax-string: oklch(0.508 0.108 73.3);
   --syntax-comment: oklch(0.499 0.014 264.4);
@@ -94,7 +94,7 @@
   --ring: oklch(0.765 0.177 163.223);
   --surface-pane: oklch(0.191 0 0);
   --surface-chrome: oklch(0.173 0 0);
-  --gutter: oklch(0.401 0.011 264.4);
+  --gutter: oklch(0.6 0.011 264.4);
   --syntax-keyword: oklch(0.768 0.111 291.2);
   --syntax-string: oklch(0.828 0.096 79.7);
   --syntax-comment: oklch(0.652 0.015 262.4);
