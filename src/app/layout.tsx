@@ -1,14 +1,51 @@
+import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 
 import "./globals.css"
+import { MotionProvider } from "@/components/motion/MotionProvider"
 import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
+import { profile } from "@/content/profile"
+import { site } from "@/content/site"
+import { cn } from "@/lib/utils"
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'})
+const title = `${profile.name} - ${profile.title}`
+
+// The OG image comes from opengraph-image.tsx, which Next adds to these tags automatically.
+export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
+  title,
+  description: site.metaDescription,
+  authors: [{ name: profile.name, url: site.url }],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: profile.name,
+    title,
+    description: site.metaDescription,
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description: site.metaDescription,
+  },
+}
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
+}
+
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" })
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  // Not preloaded: the LCP text (hero bio) uses Geist Sans, so the mono file can load after first paint.
+  preload: false,
 })
 
 export default function RootLayout({
@@ -20,10 +57,28 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", geist.variable)}
+      className={cn(
+        "antialiased motion-safe:scroll-smooth",
+        fontMono.variable,
+        "font-sans",
+        geist.variable
+      )}
     >
-      <body>
-        <ThemeProvider>{children}</ThemeProvider>
+      <head>
+        {/* Without JS, Framer Motion's server-rendered initial styles would hide content. */}
+        <noscript>
+          <style
+            dangerouslySetInnerHTML={{
+              __html:
+                "[data-motion]{opacity:1!important;transform:none!important}",
+            }}
+          />
+        </noscript>
+      </head>
+      <body className="pt-11 pb-[calc(1.5rem+env(safe-area-inset-bottom))] lg:pb-[calc(1.75rem+env(safe-area-inset-bottom))]">
+        <ThemeProvider>
+          <MotionProvider>{children}</MotionProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
