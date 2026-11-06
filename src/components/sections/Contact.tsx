@@ -50,11 +50,13 @@ export function Contact() {
       label: text ? `${channel.label}: ${text}` : channel.label,
       external: !isEmail,
       copy: isEmail ? channel.label : undefined,
-      value: text ? (
-        <CodeString>{text}</CodeString>
-      ) : (
-        <CodeCall name="message" />
-      ),
+      // WhatsApp reads as a call to start a chat; other handles are plain strings.
+      value:
+        text && channel.kind !== "whatsapp" ? (
+          <CodeString>{text}</CodeString>
+        ) : (
+          <CodeCall name="message" arg={text} />
+        ),
     }
   })
   if (resumeHref) {

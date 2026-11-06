@@ -118,7 +118,7 @@ export type ContactChannel = {
   /** Name of the channel, shown as the key in the contact object. */
   kind: "email" | "whatsapp" | "linkedin" | "github"
   href: string
-  /** Public handle shown as the value, e.g. "in/name". Omit to hide it (WhatsApp shows no number). */
+  /** Public handle shown as the value, e.g. "in/name". Omit to hide it. */
   handle?: string
 }
 
