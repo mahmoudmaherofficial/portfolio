@@ -11,8 +11,13 @@ export const contact: ContactContent = {
       label: "mahmoudmaherofficial@gmail.com",
       href: "mailto:mahmoudmaherofficial@gmail.com",
     },
-    // Link only: the number is never displayed.
-    { kind: "whatsapp", label: "WhatsApp", href: "https://wa.me/201093931501" },
+    // Links by username, so no phone number is exposed.
+    {
+      kind: "whatsapp",
+      label: "WhatsApp",
+      href: "https://wa.me/mahmoudmaher_official",
+      handle: "@mahmoudmaher_official",
+    },
     {
       kind: "linkedin",
       label: "LinkedIn",
